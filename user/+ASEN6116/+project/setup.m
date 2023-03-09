@@ -8,6 +8,16 @@ classdef setup < simulation.infrastructure
             ttMonitorConfig = struct();
             this@simulation.infrastructure('Habitat_System', ptConfigParams, tSolverParams, ttMonitorConfig);
 
+            % Marrae composition
+            trMarraeComposition.SiO2 = 0.474;
+            trMarraeComposition.MgO = 0.143;
+            trMarraeComposition.Al2O3 = 0.091;
+            trMarraeComposition.FeO = 0.123;
+            trMarraeComposition.TiO2 = 0.031;
+            trMarraeComposition.CaO = 0.132;
+            trMarraeComposition.Na2O = 0.006;
+            this.oSimulationContainer.oMT.defineCompoundMass(this, 'Regolith', trMarraeComposition);
+
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
