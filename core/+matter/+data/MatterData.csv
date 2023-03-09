@@ -1,6 +1,22 @@
 Shortcut;Name;Phase;Molar Mass;Nutritional Energy; Charge;Dissociation Constant;Melting Point;Boiling Point;Density;Heat Capacity;Linear Expansion Coefficient;Modulus of Elasticity;Thermal Conductivity;;;;;;;;
 sSubstance;sName;ttxPhases;fMolarMass;fNutritionalEnergy;iCharge;fDissociationConstant;fMeltPoint;fBoilPoint;fDensity;fCp;fExpCoeff;fModElast;fThermalConductivity;; number of properties is not limited. as long as the name is in the first row and the variablename in the second!;;;;;;
 -;-;-;kg/mol;J/kg;-;-;K;K;kg/m3;J/(kg*K);-;-;W/(m*K);;;;;;;;
+SiF4;SiliconTetraFluoride;gas;0.1040791;0;0;0;178.2;182.8;1660;708;;;;;;;;;;;
+TiF4;TitaniumTetrafluoride;gas;0.123861;0;0;0;650;650;2798;922;;;;;;;;;;;
+FeF3;FerricFluoride;solid;0.122840;0;0;0;1270;9999;3870;529;;;;;;;;;;;
+MgF2;MagnesiumFluoride;solid;0.0623018;0;0;0;1536;2530;3148;989;;;;;;;;;;;
+CaF2;CalciumFluoride;solid;0.078075;0;0;0;1691;2806;3180;897;;;;;;;;;;;
+AlF3;AluminumFluoride;solid;0.083977;0;0;0;1560;1560;3100;894;;;;;;;;;;;
+NaF;SodiumFluoride;solid;0.041988173;0;0;0;1266;1977;2558;1115;;;;;;;;;;;
+KF;PotassiumFluoride;solid;0.0580967;0;0;0;1131;1775;2480;679;;;;;;;;;;;
+F2;FluorineGas;gas;0.018998;0;0;0;53.48;85.03;1505;1632;;;;;;;;;;;
+Na2O;SodiumOxide;solid;0.061979;0;0;0;1548.15;;2300;1177;;;;;;;;;;;
+CaO;CalciumOxide;solid;0.05608;0;0;0;2886.15;3123.15;3300;892;;;;;;;;;;;
+TiO2;TitaniumDioxide;solid;0.079866;0;0;0;2116.15;3245.15;4230;683;;;;;;;;;;;
+FeO;IronOxide;solid;0.071844;0;0;0;1650;3687;5745;696;;;;;;;;;;;
+Al2O3;AluminumOxide;solid;0.10196;0;0;0;2345;3250;3987;880;;;;;;;;;;;
+MgO;MagnesiumOxide;solid;0.040304;0;0;0;3125;3870;3600;923;;;;;;;;;;;
+SiO2;SiliconDioxide;solid;0.06008;0;0;0;1983.15;2503.15;2648;1000;;;;;;;;;;;
 NH3;Ammonia;gas;0.01703052;0;0;1.80E-05;195.42;239.81;0.717;2165;;;;;;;;;;;Dissocication Constants are from: https://chem.libretexts.org/Bookshelves/General_Chemistry/Map%3A_A_Molecular_Approach_(Tro)/16%3A_Acids_and_Bases/16.04%3A_Acid_Strength_and_the_Acid_Dissociation_Constant_(Ka)
 H2SO4;SulfuricAcid;liquid;0.09807848;0;0;1000;283;610;1840;4186;;;;;heat capacity for water at 1 bar and 20øC; H2SO4 concentration is assumed to be low;;;;;Dissocication Constants are from: https://chem.libretexts.org/Bookshelves/General_Chemistry/Map%3A_A_Molecular_Approach_(Tro)/16%3A_Acids_and_Bases/16.04%3A_Acid_Strength_and_the_Acid_Dissociation_Constant_(Ka)
 NO3;Nitrate;solid;0.0620049;0;-1;0;;;804;1860;;;;;;;;;;;Dissocication Constant http://ccc.chem.pitt.edu/wipf/MechOMs/evans_pKa_table.pdf
@@ -237,7 +253,6 @@ H2O;Water;liquid;;0;0;1.00E-14;;;;;;;;;;;;;;;
 CO2;CarbonDioxide;gas;;0;0;4.40E-07;;;;;;;;;;;;;;;
 LunarRegolith;LunarRegolith;solid;1;0;0;0.00E+00;;;1450;800;;;1;;;;;;;;
 FeTiO3;Illmenite;solid;;0;0;0.00E+00;;;5000;800;;;1;;;;;;;;Heat Capacity and Thermal Conductivity from Regolith
-TiO2;Titandioxid;solid;;0;0;0.00E+00;;;4000;800;;;1;;;;;;;;Heat Capacity and Thermal Conductivity from Regolith
 Aerogel;Aerogel;solid;0.06;0;0;0.00E+00;;;01. Sep;833;;;0.02;;;;;;;;
 Inconel;Inconel;solid;1;0;0;0.00E+00;;;8260;500;;;20;;;;;;;;https://www.vdm-metals.com/fileadmin/user_upload/Downloads/Data_Sheets/Datenblatt_VDM_Alloy_718.pdf
 HCl;HydrochloricAcid;liquid;;0;0;1.30E+06;;;1048;3470;;;;;;;;;;;
