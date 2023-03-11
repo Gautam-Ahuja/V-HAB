@@ -10,8 +10,6 @@ classdef General_P2P < matter.procs.p2ps.stationary
             this.arExtractPartials = zeros(1, this.oMT.iSubstances);
             this.arExtractPartials(this.oMT.tiN2I.(sSubstance)) = 1;
             this.sSubstance = sSubstance;
-
-            oStore.toPhases.Water.toManips.substance.bind('OGA_ManipulatorUpdate', @this.calculateFlowRate);
         end
     end
     methods (Access = protected)

@@ -8,6 +8,13 @@ classdef Habitat < vsys
             this@vsys(oParent, sName, 30);
             eval(this.oRoot.oCfgParams.configCode(this));
 
+            ASEN6116.project.subsystems.Fluorination_Reactor(this, 'Fluorination_Reactor');
+            ASEN6116.project.subsystems.K_Furnace(this, 'K_Furnace');
+            ASEN6116.project.subsystems.KF_Electrolyzer(this, 'KF_Electrolyzer');
+            ASEN6116.project.subsystems.Plasma_Reactor(this, 'Plasma_Reactor');
+            ASEN6116.project.subsystems.Regolith_Reactor(this, 'Regolith_Reactor');
+            ASEN6116.project.subsystems.SiF4_Condenser(this, 'SiF4_Condenser');
+            ASEN6116.project.subsystems.TiF4_Condenser(this, 'TiF4_Condenser');
         end
 
         function createMatterStructure(this)
@@ -20,24 +27,21 @@ classdef Habitat < vsys
             % O2 storage
             matter.store(this, 'O2_Storage', 10);
 
-            % Metals output
-            matter.store(this, 'Metals_Output', 10);
+            % Metal output
+            matter.store(this, 'Metal_Storage', 10);
 
-            % Input regolith
+            % Regolith supply
             matter.store(this, 'Regolith_Supply', 10);
-            matter.phases.mixture(this.toStores.Regolith_Supply, 'FeedRegolith', 'solid', struct('Regolith', 100), this.oMT.Standard.Temperature, this.oMT.Standard.Pressure);
+            matter.phases.mixture(this.toStores.Regolith_Supply, 'Feed_Regolith', 'solid', struct('Regolith', 100), this.oMT.Standard.Temperature, this.oMT.Standard.Pressure);
 
-            % Regolith reactor manipulator
-            ASEN6116.project.components.Regolith_Reactor_Manip('Regolith_Reactor', this.toStores.Regolith_Supply.toPhases.FeedRegolith);
+            % F2 supply
+            matter.store(this, 'F2_Storage', 10);
+            matter.phases.gas(this.toStores.F2_Storage, 'Feed_F2', struct('F2', 1), 0.5, 293);
         end
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
 
-        end
-
-        function createThermalStructure(this)
-            createThermalStructure@vsys(this);
         end
     end
 

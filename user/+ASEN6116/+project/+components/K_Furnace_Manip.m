@@ -1,6 +1,6 @@
-classdef Potassium_Furnance_Manip < matter.manips.substance.stationary
+classdef K_Furnace_Manip < matter.manips.substance.stationary
     methods
-        function this = Potassium_Furnance_Manip(sName, oPhase)
+        function this = K_Furnace_Manip(sName, oPhase)
             this@matter.manips.substance.stationary(sName, oPhase);
  
         end
