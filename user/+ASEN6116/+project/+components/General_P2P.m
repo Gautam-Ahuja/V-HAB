@@ -1,10 +1,10 @@
-classdef General_Condenser_P2P < matter.procs.p2ps.stationary
+classdef General_P2P < matter.procs.p2ps.stationary
     properties (SetAccess = public, GetAccess = public)
         arExtractPartials;
         sSubstance;
     end
     methods
-        function this = General_Condenser_P2P(oStore, sName, sPhaseIn, sPhaseOut, sSubstance)
+        function this = General_P2P(oStore, sName, sPhaseIn, sPhaseOut, sSubstance)
             this@matter.procs.p2ps.stationary(oStore, sName, sPhaseIn, sPhaseOut);
             
             this.arExtractPartials = zeros(1, this.oMT.iSubstances);

@@ -13,9 +13,9 @@ classdef Habitat < vsys
         function createMatterStructure(this)
             createMatterStructure@vsys(this);
 
-            % Cabin
-            matter.store(this, 'Cabin', 38);
-            this.toStores.Cabin.createPhase('gas', 'CabinAir', 38, struct('O2', 34473.8), 293, 0.5);    % 5 psia
+            % Cabin - not yet needed
+            % matter.store(this, 'Cabin', 38);
+            % this.toStores.Cabin.createPhase('gas', 'CabinAir', 38, struct('O2', 34473.8), 293, 0.5);    % 5 psia
 
             % O2 storage
             matter.store(this, 'O2_Storage', 10);
