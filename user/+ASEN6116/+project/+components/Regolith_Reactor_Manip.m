@@ -48,9 +48,7 @@ classdef Regolith_Reactor_Manip < matter.manips.substance.stationary
             afPartialFlowRates(this.oMT.tiN2I.F2) = afFlowRateIn(this.oMt.tiN2I.F2) - fF2Consumption;
 
             % Any unaccounted mass is oxygen
-            afPartialFlowRates(this.oMT.tiN2I.O2) = afFlowRateIn(this.oMT.tiN2I.SiO2)+afFlowRateIn(this.oMT.tiN2I.TiO2)+afFlowRateIn(this.oMT.tiN2I.FeO)+...
-                afFlowRateIn(this.oMT.tiN2I.MgO)+afFlowRateIn(this.oMT.tiN2I.CaO)+afFlowRateIn(this.oMT.tiN2I.CaO)+afFlowRateIn(this.oMT.tiN2I.Al2O3)+afFlowRateIn(this.oMT.tiN2I.Na2O)-...
-                (fSiF4Production+fTiF4Production+fFeF3Production+fMgF2Production+fCaF2Production+fAlF3Production+fNaFProduction-fF2Consumption);
+            afPartialFlowRates(this.oMT.tiN2I.O2) = -sum(afPartialFlowRates);
 
             update@matter.manips.substance.stationary(this, afPartialFlowRates);
         end
