@@ -26,9 +26,11 @@ classdef Habitat < vsys
 
             % O2 storage
             matter.store(this, 'O2_Storage', 10);
+            matter.phases.gas(this.toStores.O2_Storage, 'O2_Output', struct('O2', .01), 10, 293);
 
             % Metal output
             matter.store(this, 'Metal_Storage', 10);
+            matter.phases.solid(this.toStores.Metal_Storage, 'Metal_Output', struct('Si', 0.01, 'Fe', 0.01, 'Al', 0.01, 'CaO', 0.01, 'MgO', 0.01, 'Na2O', 0.01, 'TiO2', 0.01));
 
             % Regolith supply
             matter.store(this, 'Regolith_Supply', 10);

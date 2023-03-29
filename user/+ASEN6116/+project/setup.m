@@ -28,7 +28,9 @@ classdef setup < simulation.infrastructure
         function configureMonitors(this)
             %% Logging
             oLogger = this.toMonitors.oLogger;
-            oLogger.addValue('Habitat.toStores.Cabin.toPhases.CabinAir', 'fPressure', 'Pa', 'Total Cabin Pressure');
+            oLogger.addValue('Habitat.toStores.O2_Storage.toPhases.O2_Output', 'fMass', 'kg', 'Total Oxygen Output');
+            oLogger.addValue('Habitat.toStores.Metal_Storage.toPhases.Metal_Output', 'fMass', 'kg', 'Total Metals Output');
+            oLogger.addValue('Habitat.toStores.Regolith_Supply.toPhases.Feed_Regolith', 'fMass', 'kg', 'Total Regolith Input');
         end
 
         function plot(this)
@@ -50,11 +52,13 @@ classdef setup < simulation.infrastructure
             % Defines the plotter object
             oPlotter = plot@simulation.infrastructure(this);
 
-            % Define a single plot
-            oPlot{1} = oPlotter.definePlot({'"Total Cabin Pressure"'},'Total Cabin Pressure');
+            % Define major I/O plots
+            oPlot{1,1} = oPlotter.definePlot({'"Total Oxygen Output"'},'Total Oxygen Output');
+            oPlot{2,1} = oPlotter.definePlot({'"Total Metals Output"'},'Total Metals Output');
+            oPlot{3,1} = oPlotter.definePlot({'"Total Regpolith Input"'},'Total Regolith Input');
 
-            % Define a single figure
-            oPlotter.defineFigure(oPlot,  'Total Cabin Pressure');
+            % Define a single figure for I/O data
+            oPlotter.defineFigure(coPlot,  'Regolith Reactor Major I/Os');
 
             oPlotter.plot();
         end
