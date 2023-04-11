@@ -18,7 +18,7 @@ classdef K_Furnace < vsys
             matter.phases.solid(this.toStores.K_Furnace_Store, 'K_Furnace_Regolith_Reactor_Input', struct('FeF3', 1, 'MgF2', 1, 'CaF2', 1, 'AlF3', 1, 'NaF', 1), 293);
             matter.phases.solid(this.toStores.K_Furnace_Store, 'K_Furnace_Fluorination_Reactor_Input', struct('FeF3', 1, 'MgF2', 1, 'CaF2', 1, 'AlF3', 1, 'NaF', 1), 293);
             matter.phases.solid(this.toStores.K_Furnace_Store, 'K_Furnace_TiF4_Condenser_Input', struct('TiF4', 1), 293);
-            matter.phases.solid(this.toStores.K_Furnace_Store, 'K_Furnace_KF_Electrolyzer_Input', struct('K', 1), 293);
+            matter.phases.solid(this.toStores.K_Furnace_Store, 'K_Furnace_K_Input', struct('K', 1), 293);
             matter.phases.gas(this.toStores.K_Furnace_Store, 'K_Furnace_Oxygen_Input', struct('O2', 1), 0.5, 293);
             matter.phases.mixture(this.toStores.K_Furnace_Store, 'K_Furnace_Input', 'solid', struct('FeF3', 1, 'MgF2', 1, 'CaF2', 1, 'AlF3', 1, 'NaF', 1, 'TiF4', 1, 'O2', 1, 'K', 1), 293, 1e5);
             matter.phases.liquid(this.toStores.K_Furnace_Store, 'K_Furnace_Liquid_Output', struct('KF', 1), 293, 1e5);
@@ -39,7 +39,7 @@ classdef K_Furnace < vsys
             ASEN6116.project.components.General_P2P(this.toStores.K_Furnace_Store, 'Fluorination_Reactor_AlF3_P2P', this.toStores.K_Furnace_Store.toPhases.K_Furnace_Fluorination_Reactor_Input, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, 'AlF3');
             ASEN6116.project.components.General_P2P(this.toStores.K_Furnace_Store, 'Fluorination_Reactor_NaF_P2P', this.toStores.K_Furnace_Store.toPhases.K_Furnace_Fluorination_Reactor_Input, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, 'NaF');
             ASEN6116.project.components.General_P2P(this.toStores.K_Furnace_Store, 'TiF4_P2P', this.toStores.K_Furnace_Store.toPhases.K_Furnace_TiF4_Condenser_Input, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, 'TiF4');
-            ASEN6116.project.components.General_P2P(this.toStores.K_Furnace_Store, 'K_P2P', this.toStores.K_Furnace_Store.toPhases.K_Furnace_KF_Electrolyzer_Input, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, 'K');
+            ASEN6116.project.components.General_P2P(this.toStores.K_Furnace_Store, 'K_P2P', this.toStores.K_Furnace_Store.toPhases.K_Furnace_K_Input, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, 'K');
 
             % Gaseous input P2P
             ASEN6116.project.components.General_P2P(this.toStores.K_Furance_Store, 'O2_P2P', this.toStores.K_Furnace_Store.toPhases.K_Furnace_Oxygen_Input, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, 'O2');
@@ -61,7 +61,7 @@ classdef K_Furnace < vsys
             matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Regolith_Reactor_Input, {}, 'K_Furnace_Regolith_Reactor_Inlet', 'Regolith_Reactor_to_K_Furnace');
             matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Fluorination_Reactor_Input, {}, 'K_Furnace_Fluorination_Reactor_Inlet', 'Fluorination_Reactor_to_K_Furnace');
             matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_TiF4_Condenser_Input, {}, 'K_Furnace_TiF4_Condenser_Inlet', 'TiF4_Condenser_to_K_Furnace');
-            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_KF_Electrolyzer_Input, {}, 'K_Furnace_KF_Electrolyzer_Inlet', 'KF_Electrolyzer_to_K_Furnace');
+            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_K_Furnace_K_Input, {}, 'K_Furnace_KF_Electrolyzer_Outlet', 'KF_Electrolyzer_to_K_Furnace');
             matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Oxygen_Input, {}, 'K_Furnace_O2_Inlet', 'O2_to_K_Furnace');
         end
 
@@ -86,7 +86,7 @@ classdef K_Furnace < vsys
             this.connectIF('K_Furnace_Regolith_Reactor_Inlet',  sRegolith_Reactor_Inlet);
             this.connectIF('K_Furnace_Fluorination_Reactor_Inlet',  sFluorination_Reactor_Inlet);
             this.connectIF('K_Furnace_TiF4_Condenser_Inlet', sTiF4_Condenser_Inlet);
-            this.connectIF('K_Furnace_KF_Electrolyzer_Inlet', sKF_Electrolyzer_Inlet);
+            this.connectIF('K_Furnace_KF_Electrolyzer_Outlet', sKF_Electrolyzer_Inlet);
             this.connectIF('K_Furnace_O2_Inlet', sO2_Inlet);
             this.connectIF('Liquid_Outlet', sLiquid_Outlet);
             this.connectIF('Solid_Outlet', sSolid_Outlet);
