@@ -21,16 +21,19 @@ classdef setup < simulation.infrastructure
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
-            this.fSimTime = 86400; % 1 day in seconds
+            this.fSimTime = 0.0000020; % 1 day in seconds
             this.bUseTime = true;
         end
 
         function configureMonitors(this)
             %% Logging
             oLogger = this.toMonitors.oLogger;
-            oLogger.addValue('Habitat.toStores.O2_Storage.toPhases.O2_Output', 'fMass', 'kg', 'Total Oxygen Output');
-            oLogger.addValue('Habitat.toStores.Metal_Storage.toPhases.Metal_Output', 'fMass', 'kg', 'Total Metals Output');
+            %oLogger.addValue('Habitat.toStores.O2_Storage.toPhases.O2_Output', 'fMass', 'kg', 'Total Oxygen Output');
+            %oLogger.addValue('Habitat.toStores.Metal_Storage.toPhases.Metal_Output', 'fMass', 'kg', 'Total Metals Output');
             oLogger.addValue('Habitat.toStores.Regolith_Supply.toPhases.Feed_Regolith', 'fMass', 'kg', 'Total Regolith Input');
+            oLogger.addValue('Habitat.toStores.F2_Storage.toPhases.Feed_F2', 'fMass', 'kg', 'F2 Gas In');
+            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'fMass', 'kg', 'RR Gas Out');
+            oLogger.addValue('Habitat.toStores.Regolith_Solid_Output.toPhases.Reg_Solid_Out', 'fMass', 'kg', 'RR Solid Out');
         end
 
         function plot(this)
@@ -53,9 +56,12 @@ classdef setup < simulation.infrastructure
             oPlotter = plot@simulation.infrastructure(this);
 
             % Define major I/O plots
-            oPlot{1,1} = oPlotter.definePlot({'"Total Oxygen Output"'},'Total Oxygen Output');
-            oPlot{2,1} = oPlotter.definePlot({'"Total Metals Output"'},'Total Metals Output');
-            oPlot{3,1} = oPlotter.definePlot({'"Total Regpolith Input"'},'Total Regolith Input');
+            %coPlot{1,1} = oPlotter.definePlot({'"Total Oxygen Output"'},'Total Oxygen Output');
+            %coPlot{2,1} = oPlotter.definePlot({'"Total Metals Output"'},'Total Metals Output');
+            coPlot{1,1} = oPlotter.definePlot({'"Total Regolith Input"'},'Total Regolith Input');
+            coPlot{1,2} = oPlotter.definePlot({'"F2 Gas In"'}, 'F2 Gas In');
+            coPlot{2,1} = oPlotter.definePlot({'"RR Gas Out"'}, 'RR Gas Out');
+            coPlot{2,2} = oPlotter.definePlot({'"RR Solid Out"'}, 'RR Solid Out');
 
             % Define a single figure for I/O data
             oPlotter.defineFigure(coPlot,  'Regolith Reactor Major I/Os');

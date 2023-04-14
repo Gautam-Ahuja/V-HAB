@@ -45,7 +45,7 @@ classdef Regolith_Reactor_Manip < matter.manips.substance.stationary
             afPartialFlowRates(this.oMT.tiN2I.NaF) = fNaFProduction;
 
             % Account for excess fluorine
-            afPartialFlowRates(this.oMT.tiN2I.F2) = afFlowRateIn(this.oMt.tiN2I.F2) - fF2Consumption;
+            afPartialFlowRates(this.oMT.tiN2I.F2) = afFlowRateIn(this.oMT.tiN2I.F2) - fF2Consumption;
 
             % Any unaccounted mass is oxygen
             afPartialFlowRates(this.oMT.tiN2I.O2) = -sum(afPartialFlowRates);

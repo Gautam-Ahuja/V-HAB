@@ -44,14 +44,26 @@ classdef Regolith_Reactor < vsys
             ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'NaF_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'NaF');
 
             % Inlet and outlet branches
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, {}, 'Gas_Outlet', 'Gas_to_TiF4_Condenser');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, {}, 'Solid_Outlet', 'Solid_to_K_Furnace');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Input, {}, 'Gas_Inlet', 'Gas_Inlet_to_Regolith_Reactor');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Input, {}, 'Solid_Inlet', 'Solid_Inlet_to_Regolith_Reactor');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, {}, 'Gas_Outlet', 'RR_Gas_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, {}, 'Solid_Outlet', 'RR_Solid_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Input, {}, 'Gas_Inlet', 'RR_Fluorine_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Input, {}, 'Solid_Inlet', 'RR_Regolith_Branch');
         end
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
+
+            
+
+            solver.matter.manual.branch(this.toBranches.RR_Fluorine_Branch);
+            this.toBranches.RR_Fluorine_Branch.oHandler.setFlowRate(-1);
+
+            solver.matter.manual.branch(this.toBranches.RR_Regolith_Branch);
+            this.toBranches.RR_Regolith_Branch.oHandler.setFlowRate(-1);
+
+            solver.matter.residual.branch(this.toBranches.RR_Solid_Branch);
+
+            solver.matter.residual.branch(this.toBranches.RR_Gas_Branch);
 
             this.setThermalSolvers();
         end
