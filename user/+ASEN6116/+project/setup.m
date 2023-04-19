@@ -23,7 +23,7 @@ classdef setup < simulation.infrastructure
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
-            this.fSimTime = 61.49; % 1 day in seconds
+            this.fSimTime = 61; % 1 day in seconds
             this.bUseTime = true;
         end
 
@@ -36,6 +36,8 @@ classdef setup < simulation.infrastructure
             oLogger.addValue('Habitat.toStores.F2_Storage.toPhases.Feed_F2', 'fMass', 'kg', 'F2 Gas In');
             oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'fMass', 'kg', 'RR Gas Out');
             oLogger.addValue('Habitat.toStores.Regolith_Solid_Output.toPhases.Reg_Solid_Out', 'fMass', 'kg', 'RR Solid Out');
+            oLogger.addValue('Habitat.toChildren.Regolith_Reactor.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input', 'fMass', 'kg','Reactor Input Phase');
+            oLogger.addValue('Habitat.toChildren.Regolith_Reactor.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input', 'this.afMass(this.oMT.tiN2I.F2)', 'kg','Reactor Input Fluorine');
         end
 
         function plot(this)
@@ -64,6 +66,8 @@ classdef setup < simulation.infrastructure
             coPlot{1,2} = oPlotter.definePlot({'"F2 Gas In"'}, 'F2 Gas In');
             coPlot{2,1} = oPlotter.definePlot({'"RR Gas Out"'}, 'RR Gas Out');
             coPlot{2,2} = oPlotter.definePlot({'"RR Solid Out"'}, 'RR Solid Out');
+            coPlot{3,1} = oPlotter.definePlot({'"Input Phase O2"'}, 'Input Phase O2');
+            coPlot{3,2} = oPlotter.definePlot({'"Reactor Input Fluorine"'}, 'Reactor Input Fluorine');
 
             % Define a single figure for I/O data
             oPlotter.defineFigure(coPlot,  'Regolith Reactor Major I/Os');
