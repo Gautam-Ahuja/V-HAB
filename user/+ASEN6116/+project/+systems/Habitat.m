@@ -31,6 +31,11 @@ classdef Habitat < vsys
             % Regolith Gas Output
             matter.store(this, 'Regolith_Gas_Output', 10);
             matter.phases.gas(this.toStores.Regolith_Gas_Output, 'Reg_Gas_Out', struct('SiF4', 0.1, 'TiF4', 0.1, 'O2', 0.1,'F2', 0.1), 1, 293);
+            matter.phases.gas(this.toStores.Regolith_Gas_Output, 'TiF4_Gas_In', struct('SiF4', 0.1, 'TiF4', 0.1, 'O2', 0.1, 'F2', 0.1), 1, 293);
+            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Gas_Output, 'Reg_SiF4_P2P', this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out, this.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In, 'SiF4');
+            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Gas_Output, 'Reg_TiF4_P2P', this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out, this.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In, 'TiF4');
+            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Gas_Output, 'Reg_F2_P2P', this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out, this.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In, 'F2');
+            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Gas_Output, 'Reg_O2_P2P', this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out, this.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In, 'O2');
 
             % Regolith Solid Output
             matter.store(this, 'Regolith_Solid_Output', 10);
@@ -52,7 +57,7 @@ classdef Habitat < vsys
             matter.store(this, 'TiF4_Gas_Output', 10);
             matter.phases.gas(this.toStores.TiF4_Gas_Output, 'TiF4_Gas_Out', struct('SiF4', 0.1, 'O2', 0.1,'F2', 0.1), 1, 293);
 
-            % Stores-> Regolith Reactor
+            % External Stores-> Regolith Reactor
             matter.branch(this, 'Regolith_Reactor_Gas_Inlet',  {}, this.toStores.F2_Storage.toPhases.Feed_F2);
             matter.branch(this, 'Regolith_Reactor_Solid_Inlet',  {}, this.toStores.Regolith_Supply.toPhases.Feed_Regolith);
             % Regolith Reactor -> Regolith Reactor Output Stores
@@ -62,7 +67,7 @@ classdef Habitat < vsys
             this.toChildren.Regolith_Reactor.setIfFlows('Regolith_Reactor_Gas_Inlet','Regolith_Reactor_Solid_Inlet','Regolith_Reactor_Gas_Outlet','Regolith_Reactor_Solid_Outlet');
                        
             % TiF4 Condenser Input Stores -> TiF4 Condenser
-            matter.branch(this, 'TiF4_Condenser_Inlet', {}, this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out);
+            matter.branch(this, 'TiF4_Condenser_Inlet', {}, this.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In);
             % TiF4 Condenser -> TiF4 Condenser Output Stores
             matter.branch(this, 'TiF4_Condenser_Solid_Outlet', {}, this.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out);
             matter.branch(this, 'TiF4_Condenser_Gas_Outlet', {}, this.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out);

@@ -34,12 +34,13 @@ classdef setup < simulation.infrastructure
             %oLogger.addValue('Habitat.toStores.Metal_Storage.toPhases.Metal_Output', 'fMass', 'kg', 'Total Metals Output');
             oLogger.addValue('Habitat.toStores.Regolith_Supply.toPhases.Feed_Regolith', 'fMass', 'kg', 'Total Regolith Input');
             oLogger.addValue('Habitat.toStores.F2_Storage.toPhases.Feed_F2', 'fMass', 'kg', 'F2 Gas In');
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'fMass', 'kg', 'RR Gas Out');
+            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In', 'fMass', 'kg', 'RR Gas Out');
             oLogger.addValue('Habitat.toStores.Regolith_Solid_Output.toPhases.Reg_Solid_Out', 'fMass', 'kg', 'RR Solid Out');
             oLogger.addValue('Habitat.toChildren.Regolith_Reactor.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input', 'fMass', 'kg','Reactor Input Phase');
             oLogger.addValue('Habitat.toChildren.Regolith_Reactor.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input', 'this.afMass(this.oMT.tiN2I.F2)', 'kg','Reactor Input Fluorine');
             oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fMass', 'kg', 'TiF4 Gas Out');
             oLogger.addValue('Habitat.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out', 'fMass', 'kg', 'TiF4 Solid Out');
+            oLogger.addValue('Habitat.toChildren.TiF4_Condenser.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Input', 'fMass', 'kg', 'TiF4 Condenser Input Phase');
         end
 
         function plot(this)
@@ -71,7 +72,7 @@ classdef setup < simulation.infrastructure
             coPlot{3,1} = oPlotter.definePlot({'"Reactor Input Phase"'}, 'Reactor Input Phase');
             coPlot{3,2} = oPlotter.definePlot({'"Reactor Input Fluorine"'}, 'Reactor Input Fluorine');
             coPlot{4,1} = oPlotter.definePlot({'"TiF4 Gas Out"'}, 'TiF4 Gas Out');
-            coPlot{4,2} = oPlotter.definePlot({'"TiF4 Solid Out"'}, 'TiF4 Solid Out');
+            coPlot{4,2} = oPlotter.definePlot({'"TiF4 Condenser Input Phase"'}, 'TiF4 Condenser Input Phase');
 
 
             % Define a single figure for I/O data
