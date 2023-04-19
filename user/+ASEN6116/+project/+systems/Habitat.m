@@ -30,11 +30,11 @@ classdef Habitat < vsys
 
             % Regolith Gas Output
             matter.store(this, 'Regolith_Gas_Output', 10);
-            matter.phases.gas(this.toStores.Regolith_Gas_Output, 'Reg_Gas_Out', struct('SiF4', 0.01, 'TiF4', 0.01, 'O2', 0.01,'F2', 0.01), 1, 293);
+            matter.phases.gas(this.toStores.Regolith_Gas_Output, 'Reg_Gas_Out', struct('SiF4', 0.1, 'TiF4', 0.1, 'O2', 0.1,'F2', 0.1), 1, 293);
 
             % Regolith Solid Output
             matter.store(this, 'Regolith_Solid_Output', 10);
-            matter.phases.solid(this.toStores.Regolith_Solid_Output, 'Reg_Solid_Out', struct('FeF3', 0.01, 'MgF2', 0.01, 'CaF2', 0.01, 'AlF3', 0.01, 'NaF', 0.01), 293);
+            matter.phases.solid(this.toStores.Regolith_Solid_Output, 'Reg_Solid_Out', struct('FeF3', 0.1, 'MgF2', 0.1, 'CaF2', 0.1, 'AlF3', 0.1, 'NaF', 0.1), 293);
 
             % Regolith supply
             matter.store(this, 'Regolith_Supply', 10);
@@ -42,7 +42,7 @@ classdef Habitat < vsys
 
             % F2 supply
             matter.store(this, 'F2_Storage', 10);
-            matter.phases.gas(this.toStores.F2_Storage, 'Feed_F2', struct('F2', 1), 0.5, 293);
+            matter.phases.gas(this.toStores.F2_Storage, 'Feed_F2', struct('F2', 100), 0.5, 293);
 
             % Stores-> Regolith Reactor
             matter.branch(this, 'Regolith_Reactor_Gas_Inlet',  {}, this.toStores.F2_Storage.toPhases.Feed_F2);

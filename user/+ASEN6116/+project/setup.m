@@ -6,6 +6,8 @@ classdef setup < simulation.infrastructure
     methods
         function this = setup(ptConfigParams, tSolverParams)
             ttMonitorConfig = struct();
+            ttMonitorConfig.oTimeStepObserver.sClass = 'simulation.monitors.timestepObserver';
+            ttMonitorConfig.oTimeStepObserver.cParams = { 0 , 100 };
             this@simulation.infrastructure('Habitat_System', ptConfigParams, tSolverParams, ttMonitorConfig);
 
             % Marrae composition
@@ -21,7 +23,7 @@ classdef setup < simulation.infrastructure
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
-            this.fSimTime = 0.0000020; % 1 day in seconds
+            this.fSimTime = 61.49; % 1 day in seconds
             this.bUseTime = true;
         end
 

@@ -15,20 +15,12 @@ classdef Regolith_Reactor < vsys
             matter.store(this, 'Regolith_Reactor_Store', 1);
 
             % Phases
-            matter.phases.solid(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Solid_Input', struct('Regolith', 1), 293);
-            matter.phases.gas(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Gas_Input', struct('F2', 1), 0.5, 293);
             matter.phases.mixture(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Input', 'solid', struct('Regolith', 1, 'F2', 1), 293, 1e5);
             matter.phases.gas(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Gas_Output', struct('O2', 0.1, 'F2', 0.1, 'SiF4', 0.1, 'TiF4', 0.1), 0.25, 293);
             matter.phases.solid(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Solid_Output', struct('FeF3', 1, 'MgF2', 1, 'CaF2', 1, 'AlF3', 1, 'NaF', 1), 293);
 
             % Manip
             ASEN6116.project.components.Regolith_Reactor_Manip('Regolith_Reactor_Manip', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input);
-
-            % Gaseous input P2P
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'Input_F2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, 'F2');
-
-            % Solid input P2P
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'Input_Regolith_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, 'Regolith');
 
             % Gaseous output P2Ps
             ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'O2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'O2');
@@ -46,8 +38,8 @@ classdef Regolith_Reactor < vsys
             % Inlet and outlet branches
             matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, {}, 'Gas_Outlet', 'RR_Gas_Branch');
             matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, {}, 'Solid_Outlet', 'RR_Solid_Branch');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Input, {}, 'Gas_Inlet', 'RR_Fluorine_Branch');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Input, {}, 'Solid_Inlet', 'RR_Regolith_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, {}, 'Gas_Inlet', 'RR_Fluorine_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, {}, 'Solid_Inlet', 'RR_Regolith_Branch');
         end
 
         function createSolverStructure(this)
@@ -56,10 +48,10 @@ classdef Regolith_Reactor < vsys
             
 
             solver.matter.manual.branch(this.toBranches.RR_Fluorine_Branch);
-            this.toBranches.RR_Fluorine_Branch.oHandler.setFlowRate(-1);
+            this.toBranches.RR_Fluorine_Branch.oHandler.setFlowRate(-3e-3);
 
             solver.matter.manual.branch(this.toBranches.RR_Regolith_Branch);
-            this.toBranches.RR_Regolith_Branch.oHandler.setFlowRate(-1);
+            this.toBranches.RR_Regolith_Branch.oHandler.setFlowRate(-1.5e-3);
 
             solver.matter.residual.branch(this.toBranches.RR_Solid_Branch);
 
