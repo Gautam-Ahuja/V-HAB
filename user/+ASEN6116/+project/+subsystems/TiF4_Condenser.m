@@ -35,7 +35,9 @@ classdef TiF4_Condenser < vsys
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
-
+            solver.matter.residual.branch(this.toBranches.Gas_to_SiF4_Condenser);
+            solver.matter.residual.branch(this.toBranches.Solid_to_K_Furnace);
+            solver.matter.residual.branch(this.toBranches.Inlet_to_TiF4_Condenser);
             this.setThermalSolvers();
         end
     end

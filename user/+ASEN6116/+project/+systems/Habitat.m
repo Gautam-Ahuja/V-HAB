@@ -14,7 +14,7 @@ classdef Habitat < vsys
 %             ASEN6116.project.subsystems.Plasma_Reactor(this, 'Plasma_Reactor');
             ASEN6116.project.subsystems.Regolith_Reactor(this, 'Regolith_Reactor');
 %             ASEN6116.project.subsystems.SiF4_Condenser(this, 'SiF4_Condenser');
-%             ASEN6116.project.subsystems.TiF4_Condenser(this, 'TiF4_Condenser');
+            ASEN6116.project.subsystems.TiF4_Condenser(this, 'TiF4_Condenser');
         end
 
         function createMatterStructure(this)
@@ -44,15 +44,30 @@ classdef Habitat < vsys
             matter.store(this, 'F2_Storage', 10);
             matter.phases.gas(this.toStores.F2_Storage, 'Feed_F2', struct('F2', 100), 0.5, 293);
 
+            % TiF4 Solid Output
+            matter.store(this, 'TiF4_Solid_Output', 10);
+            matter.phases.solid(this.toStores.TiF4_Solid_Output, 'TiF4_Solid_Out', struct('TiF4', 0.1), 293);
+
+            % TiF4 Gas Output
+            matter.store(this, 'TiF4_Gas_Output', 10);
+            matter.phases.gas(this.toStores.TiF4_Gas_Output, 'TiF4_Gas_Out', struct('SiF4', 0.1, 'O2', 0.1,'F2', 0.1), 1, 293);
+
             % Stores-> Regolith Reactor
             matter.branch(this, 'Regolith_Reactor_Gas_Inlet',  {}, this.toStores.F2_Storage.toPhases.Feed_F2);
             matter.branch(this, 'Regolith_Reactor_Solid_Inlet',  {}, this.toStores.Regolith_Supply.toPhases.Feed_Regolith);
-            % Regolith Reactor -> Potassium Furnace & TiF4 Condensor
+            % Regolith Reactor -> Regolith Reactor Output Stores
             matter.branch(this, 'Regolith_Reactor_Solid_Outlet',  {}, this.toStores.Regolith_Solid_Output.toPhases.Reg_Solid_Out);
             matter.branch(this, 'Regolith_Reactor_Gas_Outlet',  {},this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out); 
-
+            % Connect IF Flows
             this.toChildren.Regolith_Reactor.setIfFlows('Regolith_Reactor_Gas_Inlet','Regolith_Reactor_Solid_Inlet','Regolith_Reactor_Gas_Outlet','Regolith_Reactor_Solid_Outlet');
-
+                       
+            % TiF4 Condenser Input Stores -> TiF4 Condenser
+            matter.branch(this, 'TiF4_Condenser_Inlet', {}, this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out);
+            % TiF4 Condenser -> TiF4 Condenser Output Stores
+            matter.branch(this, 'TiF4_Condenser_Solid_Outlet', {}, this.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out);
+            matter.branch(this, 'TiF4_Condenser_Gas_Outlet', {}, this.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out);
+            % Connect IF Flows
+            this.toChildren.TiF4_Condenser.setIfFlows('TiF4_Condenser_Inlet', 'TiF4_Condenser_Gas_Outlet', 'TiF4_Condenser_Solid_Outlet');
 
 
 %             % Metal output

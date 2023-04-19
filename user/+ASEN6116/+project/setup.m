@@ -38,6 +38,8 @@ classdef setup < simulation.infrastructure
             oLogger.addValue('Habitat.toStores.Regolith_Solid_Output.toPhases.Reg_Solid_Out', 'fMass', 'kg', 'RR Solid Out');
             oLogger.addValue('Habitat.toChildren.Regolith_Reactor.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input', 'fMass', 'kg','Reactor Input Phase');
             oLogger.addValue('Habitat.toChildren.Regolith_Reactor.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input', 'this.afMass(this.oMT.tiN2I.F2)', 'kg','Reactor Input Fluorine');
+            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fMass', 'kg', 'TiF4 Gas Out');
+            oLogger.addValue('Habitat.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out', 'fMass', 'kg', 'TiF4 Solid Out');
         end
 
         function plot(this)
@@ -66,8 +68,11 @@ classdef setup < simulation.infrastructure
             coPlot{1,2} = oPlotter.definePlot({'"F2 Gas In"'}, 'F2 Gas In');
             coPlot{2,1} = oPlotter.definePlot({'"RR Gas Out"'}, 'RR Gas Out');
             coPlot{2,2} = oPlotter.definePlot({'"RR Solid Out"'}, 'RR Solid Out');
-            coPlot{3,1} = oPlotter.definePlot({'"Input Phase O2"'}, 'Input Phase O2');
+            coPlot{3,1} = oPlotter.definePlot({'"Reactor Input Phase"'}, 'Reactor Input Phase');
             coPlot{3,2} = oPlotter.definePlot({'"Reactor Input Fluorine"'}, 'Reactor Input Fluorine');
+            coPlot{4,1} = oPlotter.definePlot({'"TiF4 Gas Out"'}, 'TiF4 Gas Out');
+            coPlot{4,2} = oPlotter.definePlot({'"TiF4 Solid Out"'}, 'TiF4 Solid Out');
+
 
             % Define a single figure for I/O data
             oPlotter.defineFigure(coPlot,  'Regolith Reactor Major I/Os');
