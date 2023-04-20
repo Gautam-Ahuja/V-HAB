@@ -137,6 +137,9 @@ classdef Habitat < vsys
             % Connect IF Flows
             this.toChildren.Plasma_Reactor.setIfFlows('Plasma_Reactor_Inlet', 'Plasma_Reactor_Gas_Outlet', 'Plasma_Reactor_Solid_Outlet');
 
+            % Branch plasma reactor fluorine output back to fluorine storage
+            matter.branch(this, this.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out, {}, this.toStores.F2_Storage.toPhases.Feed_F2, 'Plasma_Reactor_to_F2_Storage');
+
 %             % Metal output
 %             matter.store(this, 'Metal_Storage', 10);
 %             matter.phases.solid(this.toStores.Metal_Storage, 'Metal_Output', struct('Si', 0.01, 'Fe', 0.01, 'Al', 0.01, 'CaO', 0.01, 'MgO', 0.01, 'Na2O', 0.01, 'TiO2', 0.01));
@@ -181,6 +184,9 @@ classdef Habitat < vsys
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
+
+            % Return fluorine from plasma reactor to F2 storage
+            solver.matter.residual.branch(this.toBranches.Plasma_Reactor_to_F2_Storage);
 
             this.setThermalSolvers();
         end
