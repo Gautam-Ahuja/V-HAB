@@ -39,8 +39,6 @@ classdef TiF4_Condenser < vsys
             solver.matter.residual.branch(this.toBranches.Solid_to_K_Furnace);
             solver.matter.residual.branch(this.toBranches.Inlet_to_TiF4_Condenser);
 
-            %solver.matter.manual.branch(this.toBranches.Inlet_to_TiF4_Condenser);
-            %this.toBranches.Inlet_to_TiF4_Condenser.oHandler.setFlowRate(-.33333e-3);
             this.setThermalSolvers();
         end
     end

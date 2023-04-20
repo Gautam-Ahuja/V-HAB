@@ -28,7 +28,7 @@ classdef Habitat < vsys
             %matter.store(this, 'O2_Storage', 10);
             %matter.phases.gas(this.toStores.O2_Storage, 'O2_Output', struct('O2', .01), 10, 293);
 
-            % Regolith Gas Output
+            % Regolith Reactor Gas Output and TiF4 Condenser Input
             matter.store(this, 'Regolith_Gas_Output', 10);
             matter.phases.gas(this.toStores.Regolith_Gas_Output, 'Reg_Gas_Out', struct('SiF4', 0.1, 'TiF4', 0.1, 'O2', 0.1,'F2', 0.1), 1, 293);
             matter.phases.gas(this.toStores.Regolith_Gas_Output, 'TiF4_Gas_In', struct('SiF4', 0.1, 'TiF4', 0.1, 'O2', 0.1, 'F2', 0.1), 1, 293);
@@ -37,7 +37,7 @@ classdef Habitat < vsys
             ASEN6116.project.components.General_P2P(this.toStores.Regolith_Gas_Output, 'Reg_F2_P2P', this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out, this.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In, 'F2');
             ASEN6116.project.components.General_P2P(this.toStores.Regolith_Gas_Output, 'Reg_O2_P2P', this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out, this.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In, 'O2');
 
-            % Regolith Solid Output
+            % Regolith Reactor Solid Output
             matter.store(this, 'Regolith_Solid_Output', 10);
             matter.phases.solid(this.toStores.Regolith_Solid_Output, 'Reg_Solid_Out', struct('FeF3', 0.1, 'MgF2', 0.1, 'CaF2', 0.1, 'AlF3', 0.1, 'NaF', 0.1), 293);
 
@@ -49,13 +49,19 @@ classdef Habitat < vsys
             matter.store(this, 'F2_Storage', 10);
             matter.phases.gas(this.toStores.F2_Storage, 'Feed_F2', struct('F2', 100), 0.5, 293);
 
-            % TiF4 Solid Output
+            % TiF4 Solid Output and Potassium Furnace Input
             matter.store(this, 'TiF4_Solid_Output', 10);
             matter.phases.solid(this.toStores.TiF4_Solid_Output, 'TiF4_Solid_Out', struct('TiF4', 0.1), 293);
+            matter.phases.solid(this.toStores.TiF4_Solid_Output, 'K_Furnace_TiF4_In', struct('TiF4', 0.1), 293);
+            ASEN6116.project.components.General_P2P(this.toStores.TiF4_Solid_Output, 'K_Furnace_TiF4_P2P', this.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out, this.toStores.TiF4_Solid_Output.toPhases.K_Furnace_TiF4_In, 'TiF4');
 
-            % TiF4 Gas Output
+            % TiF4 Gas Output and SiF4 Condenser Input
             matter.store(this, 'TiF4_Gas_Output', 10);
-            matter.phases.gas(this.toStores.TiF4_Gas_Output, 'TiF4_Gas_Out', struct('SiF4', 0.1, 'O2', 0.1,'F2', 0.1), 1, 293);
+            matter.phases.gas(this.toStores.TiF4_Gas_Output, 'TiF4_Gas_Out', struct('SiF4', 0.1, 'O2', 0.1, 'F2', 0.1), 1, 293);
+            matter.phases.gas(this.toStores.TiF4_Gas_Output, 'SiF4_Gas_In', struct('SiF4', 0.1, 'O2', 0.1, 'F2', 0.1), 1, 293);
+            ASEN6116.project.components.General_P2P(this.toStores.TiF4_Gas_Output, 'Ti2Si_Condenser_SiF4_P2P', this.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out, this.toStores.TiF4_Gas_Output.toPhases.SiF4_Gas_In, 'SiF4');
+            ASEN6116.project.components.General_P2P(this.toStores.TiF4_Gas_Output, 'Ti2Si_Condenser_O2_P2P', this.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out, this.toStores.TiF4_Gas_Output.toPhases.SiF4_Gas_In, 'O2');
+            ASEN6116.project.components.General_P2P(this.toStores.TiF4_Gas_Output, 'Ti2Si_Condenser_F2_P2P', this.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out, this.toStores.TiF4_Gas_Output.toPhases.SiF4_Gas_In, 'F2');
 
             % External Stores-> Regolith Reactor
             matter.branch(this, 'Regolith_Reactor_Gas_Inlet',  {}, this.toStores.F2_Storage.toPhases.Feed_F2);
