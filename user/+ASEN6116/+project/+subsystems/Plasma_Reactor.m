@@ -23,10 +23,10 @@ classdef Plasma_Reactor < vsys
             ASEN6116.project.components.Plasma_Reactor_Manip('Plasma_Reactor_Manip', this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Input);
 
             % Gaseous P2P
-            ASEN6116.project.components.General_P2P(this.toStores.Plasma_Reactor_Store, 'F2_P2P', this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Input, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Gas_Output, 'F2');
+            ASEN6116.project.components.Plasma_Reactor_P2P(this.toStores.Plasma_Reactor_Store, 'F2_P2P', this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Input, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Gas_Output, 'F2');
 
             % Solid P2P
-            ASEN6116.project.components.General_P2P(this.toStores.Plasma_Reactor_Store, 'Si_P2P', this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Input, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Solid_Output, 'Si');
+            ASEN6116.project.components.Plasma_Reactor_P2P(this.toStores.Plasma_Reactor_Store, 'Si_P2P', this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Input, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Solid_Output, 'Si');
 
             % Inlet and outlet branches
             matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Gas_Output, {}, 'Gas_Outlet', 'Gas_to_Regolith_Reactor');
@@ -37,6 +37,9 @@ classdef Plasma_Reactor < vsys
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
 
+            solver.matter.residual.branch(this.toBranches.Gas_to_Regolith_Reactor);
+            solver.matter.residual.branch(this.toBranches.Solid_to_Metal_Output);
+            solver.matter.residual.branch(this.toBranches.Inlet_to_Plasma_Reactor);
             this.setThermalSolvers();
         end
     end

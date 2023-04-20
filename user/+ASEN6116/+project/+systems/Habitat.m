@@ -11,7 +11,7 @@ classdef Habitat < vsys
             ASEN6116.project.subsystems.Fluorination_Reactor(this, 'Fluorination_Reactor');
 %             ASEN6116.project.subsystems.K_Furnace(this, 'K_Furnace');
 %             ASEN6116.project.subsystems.KF_Electrolyzer(this, 'KF_Electrolyzer');
-%             ASEN6116.project.subsystems.Plasma_Reactor(this, 'Plasma_Reactor');
+            ASEN6116.project.subsystems.Plasma_Reactor(this, 'Plasma_Reactor');
             ASEN6116.project.subsystems.Regolith_Reactor(this, 'Regolith_Reactor');
             ASEN6116.project.subsystems.SiF4_Condenser(this, 'SiF4_Condenser');
             ASEN6116.project.subsystems.TiF4_Condenser(this, 'TiF4_Condenser');
@@ -58,8 +58,8 @@ classdef Habitat < vsys
             % SiF4 Condenser Solid Output and Plasma Reactor Input
             matter.store(this, 'SiF4_Solid_Output', 10);
             matter.phases.solid(this.toStores.SiF4_Solid_Output, 'SiF4_Solid_Out', struct('SiF4', 0.1), 293);
-            matter.phases.solid(this.toStores.SiF4_Solid_Output, 'Plasma_Reactor_SiF4_In', struct('SiF4', 0.1), 293);
-            ASEN6116.project.components.General_P2P(this.toStores.SiF4_Solid_Output, 'Plasma_Reactor_SiF4_P2P', this.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out, this.toStores.SiF4_Solid_Output.toPhases.Plasma_Reactor_SiF4_In, 'SiF4');
+            matter.phases.solid(this.toStores.SiF4_Solid_Output, 'Plasma_Solid_In', struct('SiF4', 0.1), 293);
+            ASEN6116.project.components.General_P2P(this.toStores.SiF4_Solid_Output, 'Plasma_Reactor_SiF4_P2P', this.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out, this.toStores.SiF4_Solid_Output.toPhases.Plasma_Solid_In, 'SiF4');
 
             % SiF4 Condenser Gas Output and Fluorination Reactor Input
             matter.store(this, 'SiF4_Gas_Output', 10);
@@ -78,11 +78,23 @@ classdef Habitat < vsys
             ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Solid_Output, 'Fluorination_to_K_Furnace_AlF3_P2P', this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out, this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_to_K_Furnace_In, 'AlF3');
             ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Solid_Output, 'Fluorination_to_K_Furnace_NaF_P2P', this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out, this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_to_K_Furnace_In, 'NaF');
 
-            % Fluorination Reactor Gas Output and Oxygen Output Storage Input
+            % Fluorination Reactor Gas Output and Oxygen Storage Input
             matter.store(this, 'Fluorination_Gas_Output', 10);
             matter.phases.gas(this.toStores.Fluorination_Gas_Output, 'Fluorination_Gas_Out', struct('O2', 0.1), 1, 293);
-            matter.phases.gas(this.toStores.Fluorination_Gas_Output, 'Oxygen_Output_In', struct('O2', 0.1), 1, 293);
-            ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Gas_Output, 'O2_Storage_P2P', this.toStores.Fluorination_Gas_Output.toPhases.Fluorination_Gas_Out, this.toStores.Fluorination_Gas_Output.toPhases.Oxygen_Output_In, 'O2');
+            matter.phases.gas(this.toStores.Fluorination_Gas_Output, 'O2_Storage_In', struct('O2', 0.1), 1, 293);
+            ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Gas_Output, 'O2_Storage_P2P', this.toStores.Fluorination_Gas_Output.toPhases.Fluorination_Gas_Out, this.toStores.Fluorination_Gas_Output.toPhases.O2_Storage_In, 'O2');
+
+            % Plasma Reactor Solid Output and Silicon Storage Input
+            matter.store(this, 'Plasma_Solid_Output', 10);
+            matter.phases.solid(this.toStores.Plasma_Solid_Output, 'Plasma_Solid_Out', struct('Si', 0.1), 293);
+            matter.phases.solid(this.toStores.Plasma_Solid_Output, 'Si_Storage_In', struct('Si', 0.1), 293);
+            ASEN6116.project.components.General_P2P(this.toStores.Plasma_Solid_Output, 'Plasma_Reactor_Si_P2P', this.toStores.Plasma_Solid_Output.toPhases.Plasma_Solid_Out, this.toStores.Plasma_Solid_Output.toPhases.Si_Storage_In, 'Si');
+
+            % Plasma Reactor Gas Output and Fluorine Storage Input
+            matter.store(this, 'Plasma_Gas_Output', 10);
+            matter.phases.gas(this.toStores.Plasma_Gas_Output, 'Plasma_Gas_Out', struct('F2', 0.1), 1, 293);
+            matter.phases.gas(this.toStores.Plasma_Gas_Output, 'F2_Storage_In', struct('F2', 0.1), 1, 293);
+            ASEN6116.project.components.General_P2P(this.toStores.Plasma_Gas_Output, 'F2_Storage_P2P', this.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out, this.toStores.Plasma_Gas_Output.toPhases.F2_Storage_In, 'F2');
 
             % External Stores-> Regolith Reactor
             matter.branch(this, 'Regolith_Reactor_Gas_Inlet',  {}, this.toStores.F2_Storage.toPhases.Feed_F2);
@@ -116,6 +128,14 @@ classdef Habitat < vsys
             matter.branch(this, 'Fluorination_Reactor_Gas_Outlet', {}, this.toStores.Fluorination_Gas_Output.toPhases.Fluorination_Gas_Out);
             % Connect IF Flows
             this.toChildren.Fluorination_Reactor.setIfFlows('Fluorination_Reactor_Inlet', 'Fluorination_Reactor_Gas_Outlet', 'Fluorination_Reactor_Solid_Outlet');
+
+            % Plasma Reactor Input Stores -> Plasma Reactor
+            matter.branch(this, 'Plasma_Reactor_Inlet', {}, this.toStores.SiF4_Solid_Output.toPhases.Plasma_Solid_In)
+            % Plasma Reactor -> Plasma Reactor Output Stores
+            matter.branch(this, 'Plasma_Reactor_Solid_Outlet', {}, this.toStores.Plasma_Solid_Output.toPhases.Plasma_Solid_Out);
+            matter.branch(this, 'Plasma_Reactor_Gas_Outlet', {}, this.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out);
+            % Connect IF Flows
+            this.toChildren.Plasma_Reactor.setIfFlows('Plasma_Reactor_Inlet', 'Plasma_Reactor_Gas_Outlet', 'Plasma_Reactor_Solid_Outlet');
 
 %             % Metal output
 %             matter.store(this, 'Metal_Storage', 10);

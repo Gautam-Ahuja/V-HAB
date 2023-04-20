@@ -1,4 +1,4 @@
-classdef Plasma_Reactor_Manip < matter.manips.substance.stationary
+classdef Plasma_Reactor_Manip < matter.manips.substance.stationary & event.source
     methods
         function this = Plasma_Reactor_Manip(sName, oPhase)
             this@matter.manips.substance.stationary(sName, oPhase);
@@ -25,6 +25,7 @@ classdef Plasma_Reactor_Manip < matter.manips.substance.stationary
             afPartialFlowRates(this.oMT.tiN2I.Si) = fSiProduction;
 
             update@matter.manips.substance.stationary(this, afPartialFlowRates);
+            this.trigger('Plasma_Reactor_Manip_Update')
         end
     end
 end
