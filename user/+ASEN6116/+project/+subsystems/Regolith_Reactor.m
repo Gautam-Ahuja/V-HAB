@@ -45,8 +45,6 @@ classdef Regolith_Reactor < vsys
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
 
-            
-
             solver.matter.manual.branch(this.toBranches.RR_Fluorine_Branch);
             this.toBranches.RR_Fluorine_Branch.oHandler.setFlowRate(-3e-3);
 
@@ -54,7 +52,6 @@ classdef Regolith_Reactor < vsys
             this.toBranches.RR_Regolith_Branch.oHandler.setFlowRate(-1.5e-3);
 
             solver.matter.residual.branch(this.toBranches.RR_Solid_Branch);
-
             solver.matter.residual.branch(this.toBranches.RR_Gas_Branch);
 
             this.setThermalSolvers();

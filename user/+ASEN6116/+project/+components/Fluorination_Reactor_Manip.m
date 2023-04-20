@@ -1,4 +1,4 @@
-classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary
+classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event.source
     methods
         function this = Fluorination_Reactor_Manip(sName, oPhase)
             this@matter.manips.substance.stationary(sName, oPhase);
@@ -33,6 +33,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
                 afPartialFlowRates(this.oMT.tiN2I.Na2O) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
+                this.trigger('Fluorination_Reactor_Manip_Update');
                 return;
             else
                 % Complete reaction of Na2O
@@ -56,6 +57,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
                 afPartialFlowRates(this.oMT.tiN2I.CaO) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
+                this.trigger('Fluorination_Reactor_Manip_Update');
                 return;
             else
                 % Complete reaction of CaO
@@ -78,6 +80,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
                 afPartialFlowRates(this.oMT.tiN2I.MgO) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
+                this.trigger('Fluorination_Reactor_Manip_Update');
                 return;
             else
                 % Complete reaction of MgO
@@ -98,6 +101,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
                 afPartialFlowRates(this.oMT.tiN2I.Al) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
+                this.trigger('Fluorination_Reactor_Manip_Update');
                 return;
             else
                 % Complete reaction of Al
@@ -117,6 +121,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
                 afPartialFlowRates(this.oMT.tiN2I.Ti) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
+                this.trigger('Fluorination_Reactor_Manip_Update');
                 return;
             else
                 % Complete reaction of TiO2
@@ -134,6 +139,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary
                 afPartialFlowRates(this.oMT.tiN2I.O2) = fO2Production;
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
+                this.trigger('Fluorination_Reactor_Manip_Update');
                 return;
             else
                 % Complete reaction of Fe
@@ -147,6 +153,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary
             afPartialFlowRates(this.oMT.tiN2I.O2) = fO2Production;
             afPartialFlowRates(this.oMT.tiN2I.F2) = -sum(afPartialFlowRates);
             update@matter.manips.substance.stationary(this, afPartialFlowRates);
+            this.trigger('Fluorination_Reactor_Manip_Update');
         end
     end
 end
