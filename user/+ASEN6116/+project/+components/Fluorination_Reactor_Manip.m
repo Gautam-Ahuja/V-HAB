@@ -31,6 +31,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 afPartialFlowRates(this.oMT.tiN2I.Al) = afFlowRateIn(this.oMT.tiN2I.Al);
                 afPartialFlowRates(this.oMT.tiN2I.Ti) = afFlowRateIn(this.oMT.tiN2I.Ti);
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
+                afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.Na2O) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
                 this.trigger('Fluorination_Reactor_Manip_Update');
@@ -55,6 +56,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 afPartialFlowRates(this.oMT.tiN2I.Al) = afFlowRateIn(this.oMT.tiN2I.Al);
                 afPartialFlowRates(this.oMT.tiN2I.Ti) = afFlowRateIn(this.oMT.tiN2I.Ti);
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
+                afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.CaO) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
                 this.trigger('Fluorination_Reactor_Manip_Update');
@@ -78,6 +80,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 afPartialFlowRates(this.oMT.tiN2I.Al) = afFlowRateIn(this.oMT.tiN2I.Al);
                 afPartialFlowRates(this.oMT.tiN2I.Ti) = afFlowRateIn(this.oMT.tiN2I.Ti);
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
+                afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.MgO) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
                 this.trigger('Fluorination_Reactor_Manip_Update');
@@ -99,6 +102,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 afPartialFlowRates(this.oMT.tiN2I.O2) = fO2Production;
                 afPartialFlowRates(this.oMT.tiN2I.Ti) = afFlowRateIn(this.oMT.tiN2I.Ti);
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
+                afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.Al) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
                 this.trigger('Fluorination_Reactor_Manip_Update');
@@ -119,6 +123,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 afPartialFlowRates(this.oMT.tiN2I.TiF4) = fTiF4Production;
                 afPartialFlowRates(this.oMT.tiN2I.O2) = fO2Production;
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
+                afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.Ti) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
                 this.trigger('Fluorination_Reactor_Manip_Update');
@@ -137,6 +142,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 fFeF3Production = 2/3*this.oMT.afMolarMass(this.oMT.tiN2I.FeF3)/this.oMT.afMolarMass(this.oMT.tiN2I.F2)*fRemainingFluorine;
                 afPartialFlowRates(this.oMT.tiN2I.FeF3) = fFeF3Production;
                 afPartialFlowRates(this.oMT.tiN2I.O2) = fO2Production;
+                afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.Fe) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
                 this.trigger('Fluorination_Reactor_Manip_Update');
