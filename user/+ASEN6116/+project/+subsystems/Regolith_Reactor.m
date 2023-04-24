@@ -24,7 +24,7 @@ classdef Regolith_Reactor < vsys
 
             % Gaseous output P2Ps
             ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'O2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'O2');
-            ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'F2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'F2');
+            ASEN6116.project.components.Fluorine_P2P(this.toStores.Regolith_Reactor_Store, 'F2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'F2');
             ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'SiF4_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'SiF4');
             ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'TiF4_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'TiF4');
 
@@ -38,7 +38,8 @@ classdef Regolith_Reactor < vsys
             % Inlet and outlet branches
             matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, {}, 'Gas_Outlet', 'RR_Gas_Branch');
             matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, {}, 'Solid_Outlet', 'RR_Solid_Branch');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, {}, 'Gas_Inlet', 'RR_Fluorine_Branch');
+            matter.procs.exmes.mixture(this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, 'Fluorine_ExMe');
+            matter.branch(this, 'Regolith_Reactor_Store.Fluorine_ExMe', {}, 'Gas_Inlet', 'RR_Fluorine_Branch');
             matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, {}, 'Solid_Inlet', 'RR_Regolith_Branch');
         end
 
