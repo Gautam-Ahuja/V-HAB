@@ -23,7 +23,7 @@ classdef setup < simulation.infrastructure
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
-            this.fSimTime = 61; % 1 day in seconds
+            this.fSimTime = 120; % 1 day in seconds
             this.bUseTime = true;
         end
 

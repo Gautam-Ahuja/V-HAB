@@ -12,7 +12,7 @@ classdef K_Furnace < vsys
         function createMatterStructure(this)
             createMatterStructure@vsys(this);
             % Store
-            matter.store(this, 'K_Furnace_Store', 1);
+            matter.store(this, 'K_Furnace_Store', ..01);
 
             % Phases
             matter.phases.solid(this.toStores.K_Furnace_Store, 'K_Furnace_Regolith_Reactor_Input', struct('FeF3', 1, 'MgF2', 1, 'CaF2', 1, 'AlF3', 1, 'NaF', 1), 293);

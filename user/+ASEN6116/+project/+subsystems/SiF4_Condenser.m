@@ -12,7 +12,7 @@ classdef SiF4_Condenser < vsys
         function createMatterStructure(this)
             createMatterStructure@vsys(this);
             % Store
-            matter.store(this, 'SiF4_Condenser_Store', 1);
+            matter.store(this, 'SiF4_Condenser_Store', .01);
 
             % Phases
             matter.phases.gas(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Input', struct('O2', 0.1, 'F2', 0.1, 'SiF4', 0.1), 0.25, 293);

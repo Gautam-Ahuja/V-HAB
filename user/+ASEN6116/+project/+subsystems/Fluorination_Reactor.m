@@ -12,7 +12,7 @@ classdef Fluorination_Reactor < vsys
         function createMatterStructure(this)
             createMatterStructure@vsys(this);
             % Store
-            matter.store(this, 'Fluorination_Reactor_Store', 1);
+            matter.store(this, 'Fluorination_Reactor_Store', .01);
 
             % Phases
             matter.phases.mixture(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Input','solid', struct('O2', 0.1, 'F2', 0.1, 'Fe', 1, 'MgO', 1, 'CaO', 1, 'Al', 1, 'Na2O', 1, 'TiO2', 1), 293, 1e5);

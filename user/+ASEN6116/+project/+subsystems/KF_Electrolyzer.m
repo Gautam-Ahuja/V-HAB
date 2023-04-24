@@ -12,7 +12,7 @@ classdef KF_Electrolyzer < vsys
         function createMatterStructure(this)
             createMatterStructure@vsys(this);
             % Store
-            matter.store(this, 'KF_Electrolyzer_Store', 1);
+            matter.store(this, 'KF_Electrolyzer_Store', .01);
 
             % Phases
             matter.phases.liquid(this.toStores.KF_Electrolyzer_Store, 'KF_Electrolyzer_Input', struct('KF', 1), 293, 1e5);

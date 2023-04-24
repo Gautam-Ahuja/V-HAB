@@ -21,7 +21,7 @@ classdef Habitat < vsys
             createMatterStructure@vsys(this);
 
             % Regolith Reactor Gas Output and TiF4 Condenser Input
-            matter.store(this, 'Regolith_Gas_Output', 10);
+            matter.store(this, 'Regolith_Gas_Output', .01);
             matter.phases.gas(this.toStores.Regolith_Gas_Output, 'Reg_Gas_Out', struct('SiF4', 0.1, 'TiF4', 0.1, 'O2', 0.1,'F2', 0.1), 1, 293);
             matter.phases.gas(this.toStores.Regolith_Gas_Output, 'TiF4_Gas_In', struct('SiF4', 0.1, 'TiF4', 0.1, 'O2', 0.1, 'F2', 0.1), 1, 293);
             ASEN6116.project.components.General_P2P(this.toStores.Regolith_Gas_Output, 'Reg_SiF4_P2P', this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out, this.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In, 'SiF4');
@@ -30,25 +30,25 @@ classdef Habitat < vsys
             ASEN6116.project.components.General_P2P(this.toStores.Regolith_Gas_Output, 'Reg_O2_P2P', this.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out, this.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In, 'O2');
 
             % Regolith Reactor Solid Output
-            matter.store(this, 'Regolith_Solid_Output', 10);
+            matter.store(this, 'Regolith_Solid_Output', .01);
             matter.phases.solid(this.toStores.Regolith_Solid_Output, 'Reg_Solid_Out', struct('FeF3', 0.1, 'MgF2', 0.1, 'CaF2', 0.1, 'AlF3', 0.1, 'NaF', 0.1), 293);
 
             % Regolith supply
-            matter.store(this, 'Regolith_Supply', 10);
+            matter.store(this, 'Regolith_Supply', .01);
             matter.phases.mixture(this.toStores.Regolith_Supply, 'Feed_Regolith', 'solid', struct('Regolith', 100), this.oMT.Standard.Temperature, this.oMT.Standard.Pressure);
 
             % F2 supply
-            matter.store(this, 'F2_Storage', 10);
+            matter.store(this, 'F2_Storage', .01);
             matter.phases.gas(this.toStores.F2_Storage, 'Feed_F2', struct('F2', 100), 0.5, 293);
 
             % TiF4 Condenser Solid Output and Potassium Furnace Input
-            matter.store(this, 'TiF4_Solid_Output', 10);
+            matter.store(this, 'TiF4_Solid_Output', .01);
             matter.phases.solid(this.toStores.TiF4_Solid_Output, 'TiF4_Solid_Out', struct('TiF4', 0.1), 293);
             matter.phases.solid(this.toStores.TiF4_Solid_Output, 'K_Furnace_TiF4_In', struct('TiF4', 0.1), 293);
             ASEN6116.project.components.General_P2P(this.toStores.TiF4_Solid_Output, 'K_Furnace_TiF4_P2P', this.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out, this.toStores.TiF4_Solid_Output.toPhases.K_Furnace_TiF4_In, 'TiF4');
 
             % TiF4 Condenser Gas Output and SiF4 Condenser Input
-            matter.store(this, 'TiF4_Gas_Output', 10);
+            matter.store(this, 'TiF4_Gas_Output', .01);
             matter.phases.gas(this.toStores.TiF4_Gas_Output, 'TiF4_Gas_Out', struct('SiF4', 0.1, 'O2', 0.1, 'F2', 0.1), 1, 293);
             matter.phases.gas(this.toStores.TiF4_Gas_Output, 'SiF4_Gas_In', struct('SiF4', 0.1, 'O2', 0.1, 'F2', 0.1), 1, 293);
             ASEN6116.project.components.General_P2P(this.toStores.TiF4_Gas_Output, 'Ti2Si_Condenser_SiF4_P2P', this.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out, this.toStores.TiF4_Gas_Output.toPhases.SiF4_Gas_In, 'SiF4');
@@ -56,20 +56,20 @@ classdef Habitat < vsys
             ASEN6116.project.components.General_P2P(this.toStores.TiF4_Gas_Output, 'Ti2Si_Condenser_F2_P2P', this.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out, this.toStores.TiF4_Gas_Output.toPhases.SiF4_Gas_In, 'F2');
 
             % SiF4 Condenser Solid Output and Plasma Reactor Input
-            matter.store(this, 'SiF4_Solid_Output', 10);
+            matter.store(this, 'SiF4_Solid_Output', .01);
             matter.phases.solid(this.toStores.SiF4_Solid_Output, 'SiF4_Solid_Out', struct('SiF4', 0.1), 293);
             matter.phases.solid(this.toStores.SiF4_Solid_Output, 'Plasma_Solid_In', struct('SiF4', 0.1), 293);
             ASEN6116.project.components.General_P2P(this.toStores.SiF4_Solid_Output, 'Plasma_Reactor_SiF4_P2P', this.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out, this.toStores.SiF4_Solid_Output.toPhases.Plasma_Solid_In, 'SiF4');
 
             % SiF4 Condenser Gas Output and Fluorination Reactor Input
-            matter.store(this, 'SiF4_Gas_Output', 10);
+            matter.store(this, 'SiF4_Gas_Output', .01);
             matter.phases.gas(this.toStores.SiF4_Gas_Output, 'SiF4_Gas_Out', struct('O2', 0.1, 'F2', 0.1), 1, 293);
             matter.phases.gas(this.toStores.SiF4_Gas_Output, 'Fluorination_Gas_In', struct('O2', 0.1, 'F2', 0.1), 1, 293);
             ASEN6116.project.components.General_P2P(this.toStores.SiF4_Gas_Output, 'Fluorination_O2_P2P', this.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out, this.toStores.SiF4_Gas_Output.toPhases.Fluorination_Gas_In, 'O2');
             ASEN6116.project.components.General_P2P(this.toStores.SiF4_Gas_Output, 'Fluorination_F2_P2P', this.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out, this.toStores.SiF4_Gas_Output.toPhases.Fluorination_Gas_In, 'F2');
 
             % Fluorination Reactor Solid Output and Potassium Furnace Input
-            matter.store(this, 'Fluorination_Solid_Output', 10);
+            matter.store(this, 'Fluorination_Solid_Output', .01);
             matter.phases.solid(this.toStores.Fluorination_Solid_Output, 'Fluorination_Solid_Out', struct('FeF3', 0.1, 'MgF2', 0.1, 'CaF2', 0.1, 'AlF3', 0.1, 'NaF', 0.1), 293);
             matter.phases.solid(this.toStores.Fluorination_Solid_Output, 'Fluorination_to_K_Furnace_In', struct('FeF3', 0.1, 'MgF2', 0.1, 'CaF2', 0.1, 'AlF3', 0.1, 'NaF', 0.1), 293);
             ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Solid_Output, 'Fluorination_to_K_Furnace_FeF3_P2P', this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out, this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_to_K_Furnace_In, 'FeF3');
@@ -79,19 +79,19 @@ classdef Habitat < vsys
             ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Solid_Output, 'Fluorination_to_K_Furnace_NaF_P2P', this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out, this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_to_K_Furnace_In, 'NaF');
 
             % Fluorination Reactor Gas Output and Oxygen Storage Input
-            matter.store(this, 'Fluorination_Gas_Output', 10);
+            matter.store(this, 'Fluorination_Gas_Output', .01);
             matter.phases.gas(this.toStores.Fluorination_Gas_Output, 'Fluorination_Gas_Out', struct('O2', 0.1), 1, 293);
             matter.phases.gas(this.toStores.Fluorination_Gas_Output, 'O2_Storage_In', struct('O2', 0.1), 1, 293);
             ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Gas_Output, 'O2_Storage_P2P', this.toStores.Fluorination_Gas_Output.toPhases.Fluorination_Gas_Out, this.toStores.Fluorination_Gas_Output.toPhases.O2_Storage_In, 'O2');
 
             % Plasma Reactor Solid Output and Silicon Storage Input
-            matter.store(this, 'Plasma_Solid_Output', 10);
+            matter.store(this, 'Plasma_Solid_Output', .01);
             matter.phases.solid(this.toStores.Plasma_Solid_Output, 'Plasma_Solid_Out', struct('Si', 0.1), 293);
             matter.phases.solid(this.toStores.Plasma_Solid_Output, 'Si_Storage_In', struct('Si', 0.1), 293);
             ASEN6116.project.components.General_P2P(this.toStores.Plasma_Solid_Output, 'Plasma_Reactor_Si_P2P', this.toStores.Plasma_Solid_Output.toPhases.Plasma_Solid_Out, this.toStores.Plasma_Solid_Output.toPhases.Si_Storage_In, 'Si');
 
             % Plasma Reactor Gas Output and Fluorine Storage Input
-            matter.store(this, 'Plasma_Gas_Output', 10);
+            matter.store(this, 'Plasma_Gas_Output', .01);
             matter.phases.gas(this.toStores.Plasma_Gas_Output, 'Plasma_Gas_Out', struct('F2', 0.1), 1, 293);
             matter.phases.gas(this.toStores.Plasma_Gas_Output, 'F2_Storage_In', struct('F2', 0.1), 1, 293);
             ASEN6116.project.components.General_P2P(this.toStores.Plasma_Gas_Output, 'F2_Storage_P2P', this.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out, this.toStores.Plasma_Gas_Output.toPhases.F2_Storage_In, 'F2');

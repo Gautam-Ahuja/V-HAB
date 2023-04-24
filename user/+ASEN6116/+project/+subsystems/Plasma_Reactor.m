@@ -12,7 +12,7 @@ classdef Plasma_Reactor < vsys
         function createMatterStructure(this)
             createMatterStructure@vsys(this);
             % Store
-            matter.store(this, 'Plasma_Reactor_Store', 1);
+            matter.store(this, 'Plasma_Reactor_Store', .01);
 
             % Phases
             matter.phases.solid(this.toStores.Plasma_Reactor_Store, 'Plasma_Reactor_Input', struct('SiF4', 1), 293);
