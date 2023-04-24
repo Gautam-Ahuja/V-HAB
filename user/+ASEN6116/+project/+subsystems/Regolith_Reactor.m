@@ -35,24 +35,37 @@ classdef Regolith_Reactor < vsys
             ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'AlF3_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'AlF3');
             ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'NaF_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'NaF');
 
+            % Pipes and Pumps
+            fLength = 1; % pipe length [m]
+            fDiameter = 0.1; % pipe diameter [m]
+            fRoughness = 1e-5; % surface roughness [m]
+            fMaxDeltaP = 1e8; % maximum pressure rise [Pa]
+            fFlowRateSP = 1; % flowrate set point [kg/s]
+            components.matter.pipe(this, 'Pipe_1', fLength, fDiameter, fRoughness);
+            components.matter.pipe(this, 'Pipe_2', fLength, fDiameter, fRoughness);
+            components.matter.pipe(this, 'Pipe_3', fLength, fDiameter, fRoughness);
+            components.matter.pipe(this, 'Pipe_4', fLength, fDiameter, fRoughness);
+            components.matter.fan_simple(this, 'Fan_1', fMaxDeltaP, true);
+            components.matter.pump(this, 'Pump_1', fFlowRateSP);
+            
             % Inlet and outlet branches
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, {}, 'Gas_Outlet', 'RR_Gas_Branch');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, {}, 'Solid_Outlet', 'RR_Solid_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, {'Pipe_1','Fan_1','Pipe_2'}, 'Gas_Outlet', 'RR_Gas_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, {'Pipe_3','Pump_1','Pipe_4'}, 'Solid_Outlet', 'RR_Solid_Branch');
             matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, {}, 'Gas_Inlet', 'RR_Fluorine_Branch');
             matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, {}, 'Solid_Inlet', 'RR_Regolith_Branch');
         end
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
-
+            
             solver.matter.manual.branch(this.toBranches.RR_Fluorine_Branch);
             this.toBranches.RR_Fluorine_Branch.oHandler.setFlowRate(-3e-3);
 
             solver.matter.manual.branch(this.toBranches.RR_Regolith_Branch);
             this.toBranches.RR_Regolith_Branch.oHandler.setFlowRate(-1.5e-3);
 
-            solver.matter.residual.branch(this.toBranches.RR_Solid_Branch);
-            solver.matter.residual.branch(this.toBranches.RR_Gas_Branch);
+            solver.matter.interval.branch(this.toBranches.RR_Solid_Branch);
+            solver.matter.interval.branch(this.toBranches.RR_Gas_Branch);
 
             this.setThermalSolvers();
         end
