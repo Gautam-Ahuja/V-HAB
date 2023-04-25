@@ -108,22 +108,6 @@ classdef Habitat < vsys
             % Connect IF Flows
             this.toChildren.SiF4_Condenser.setIfFlows('SiF4_Condenser_Inlet', 'SiF4_Condenser_Gas_Outlet', 'SiF4_Condenser_Solid_Outlet');
 
-            % Fluorination Reactor Input Stores -> Fluorination Reactor
-            matter.branch(this, 'Fluorination_Reactor_Inlet', {}, this.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out);
-            % Fluorination Reactor -> Fluorination Reactor Output Stores
-            matter.branch(this, 'Fluorination_Reactor_Solid_Outlet', {}, this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out);
-            matter.branch(this, 'Fluorination_Reactor_Gas_Outlet', {}, this.toStores.Fluorination_Gas_Output.toPhases.Fluorination_Gas_Out);
-            % Connect IF Flows
-            this.toChildren.Fluorination_Reactor.setIfFlows('Fluorination_Reactor_Inlet', 'Fluorination_Reactor_Gas_Outlet', 'Fluorination_Reactor_Solid_Outlet');
-
-            % Plasma Reactor Input Stores -> Plasma Reactor
-            matter.branch(this, 'Plasma_Reactor_Inlet', {}, this.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out);
-            % Plasma Reactor -> Plasma Reactor Output Stores
-            matter.branch(this, 'Plasma_Reactor_Solid_Outlet', {}, this.toStores.Plasma_Solid_Output.toPhases.Plasma_Solid_Out);
-            matter.branch(this, 'Plasma_Reactor_Gas_Outlet', {}, this.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out);
-            % Connect IF Flows
-            this.toChildren.Plasma_Reactor.setIfFlows('Plasma_Reactor_Inlet', 'Plasma_Reactor_Gas_Outlet', 'Plasma_Reactor_Solid_Outlet');
-
             % Electrolyzer Input Stores -> Electrolyzer
             matter.branch(this, 'KF_In', {}, this.toStores.K_Furnace_Liquid_Output.toPhases.K_Furnace_Liquid_Out);
             % Electrolyzer -> Electrolyzer Output Stores
@@ -142,7 +126,24 @@ classdef Habitat < vsys
             matter.branch(this, 'K_Furnace_to_Electrolyzer', {}, this.toStores.K_Furnace_Liquid_Output.toPhases.K_Furnace_Liquid_Out);
             this.toChildren.K_Furnace.setIfFlows('RR_to_K_Furnace', 'Fluorination_to_K_Furnace', 'TiF4_to_K_Furnace', 'Electrolyzer_to_K_Furnace', 'O2_Feed_to_K_Furnace', 'K_Furnace_to_Electrolyzer', 'K_Furnace_to_Metal_Output');
 
-            % Branch plasma reactor fluorine output back to fluorine storage
+            % Fluorination Reactor Input Stores -> Fluorination Reactor
+            matter.branch(this, 'Fluorination_Reactor_Gas_Inlet', {}, this.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out);
+            matter.branch(this, 'Fluorination_Reactor_Solid_Inlet', {}, this.toStores.K_Furnace_Solid_Output.toPhases.K_Furnace_Solid_Out);
+            % Fluorination Reactor -> Fluorination Reactor Output Stores
+            matter.branch(this, 'Fluorination_Reactor_Solid_Outlet', {}, this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out);
+            matter.branch(this, 'Fluorination_Reactor_Gas_Outlet', {}, this.toStores.Fluorination_Gas_Output.toPhases.Fluorination_Gas_Out);
+            % Connect IF Flows
+            this.toChildren.Fluorination_Reactor.setIfFlows('Fluorination_Reactor_Gas_Inlet', 'Fluorination_Reactor_Solid_Inlet', 'Fluorination_Reactor_Gas_Outlet', 'Fluorination_Reactor_Solid_Outlet');
+
+            % Plasma Reactor Input Stores -> Plasma Reactor
+            matter.branch(this, 'Plasma_Reactor_Inlet', {}, this.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out);
+            % Plasma Reactor -> Plasma Reactor Output Stores
+            matter.branch(this, 'Plasma_Reactor_Solid_Outlet', {}, this.toStores.Plasma_Solid_Output.toPhases.Plasma_Solid_Out);
+            matter.branch(this, 'Plasma_Reactor_Gas_Outlet', {}, this.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out);
+            % Connect IF Flows
+            this.toChildren.Plasma_Reactor.setIfFlows('Plasma_Reactor_Inlet', 'Plasma_Reactor_Gas_Outlet', 'Plasma_Reactor_Solid_Outlet');
+
+            % Branch plasma reactor and electrolyzer fluorine output back to fluorine storage
             matter.branch(this, this.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out, {}, this.toStores.F2_Storage.toPhases.Feed_F2, 'Plasma_Reactor_to_F2_Storage');
             matter.branch(this, this.toStores.Electrolyzer_Gas_Output.toPhases.Electrolyzer_Gas_Out, {}, this.toStores.F2_Storage.toPhases.Feed_F2, 'Electrolyzer_to_F2_Storage');        
         end

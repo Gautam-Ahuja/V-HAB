@@ -35,12 +35,20 @@ classdef Regolith_Reactor < vsys
             ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'AlF3_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'AlF3');
             ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'NaF_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'NaF');
 
+            % Pipes
+            fLength     = 1;    % Pipe length in m
+            fDiameter   = 0.01; % Pipe Diameter in m
+            components.matter.pipe(this, 'Pipe_1', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_2', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_3', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_4', fLength, fDiameter);
+
             % Inlet and outlet branches
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, {}, 'Gas_Outlet', 'RR_Gas_Branch');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, {}, 'Solid_Outlet', 'RR_Solid_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, {'Pipe_1'}, 'Gas_Outlet', 'RR_Gas_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, {'Pipe_2'}, 'Solid_Outlet', 'RR_Solid_Branch');
             matter.procs.exmes.mixture(this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, 'Fluorine_ExMe');
-            matter.branch(this, 'Regolith_Reactor_Store.Fluorine_ExMe', {}, 'Gas_Inlet', 'RR_Fluorine_Branch');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, {}, 'Solid_Inlet', 'RR_Regolith_Branch');
+            matter.branch(this, 'Regolith_Reactor_Store.Fluorine_ExMe', {'Pipe_3'}, 'Gas_Inlet', 'RR_Fluorine_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, {'Pipe_4'}, 'Solid_Inlet', 'RR_Regolith_Branch');
         end
 
         function createSolverStructure(this)
@@ -52,8 +60,8 @@ classdef Regolith_Reactor < vsys
             solver.matter.manual.branch(this.toBranches.RR_Regolith_Branch);
             this.toBranches.RR_Regolith_Branch.oHandler.setFlowRate(-1.5e-3);
 
-            solver.matter.residual.branch(this.toBranches.RR_Solid_Branch);
-            solver.matter.residual.branch(this.toBranches.RR_Gas_Branch);
+            solver.matter_multibranch.iterative.branch(this.toBranches.RR_Solid_Branch);
+            solver.matter_multibranch.iterative.branch(this.toBranches.RR_Gas_Branch);
 
             this.setThermalSolvers();
         end

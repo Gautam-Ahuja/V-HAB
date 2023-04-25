@@ -23,7 +23,7 @@ classdef setup < simulation.infrastructure
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
-            this.fSimTime = 10; % 1 day in seconds
+            this.fSimTime = 1; % 1 day in seconds
             this.bUseTime = true;
         end
 
@@ -46,6 +46,9 @@ classdef setup < simulation.infrastructure
             oLogger.addValue('Habitat.toStores.Plasma_Solid_Output.toPhases.Plasma_Solid_Out', 'fMass', 'kg', 'Plasma Solid Out');
             oLogger.addValue('Habitat.toStores.Electrolyzer_Gas_Output.toPhases.Electrolyzer_Gas_Out', 'fMass', 'kg', 'Electrolyzer Gas Out');
             oLogger.addValue('Habitat.toStores.Electrolyzer_Solid_Output.toPhases.Electrolyzer_Solid_Out', 'fMass', 'kg', 'Electrolyzer Solid Out');
+
+            oLogger.addValue('Habitat.toChildren.TiF4_Condenser.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Input', 'fMass', 'kg', 'TiF4 Input');
+            oLogger.addValue('Habitat.toChildren.TiF4_Condenser.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Solid_Output', 'fMass', 'kg', 'TiF4 Solid Output');
         end
 
         function plot(this)
@@ -85,9 +88,13 @@ classdef setup < simulation.infrastructure
             coPlot2{4,1} = oPlotter.definePlot({'"Electrolyzer Gas Out"'}, 'Electrolyzer Gas Out');
             coPlot2{4,2} = oPlotter.definePlot({'"Electrolyzer Solid Out"'}, 'Electrolyzer Solid Out');
 
+            coPlot3{1,1} = oPlotter.definePlot({'"TiF4 Input"'}, 'TiF4 Input');
+            coPlot3{2,1} = oPlotter.definePlot({'"TiF4 Solid Output"'}, 'TiF4 Solid Output');
+
             % Define a single figure for I/O data
-            oPlotter.defineFigure(coPlot1,  'Reactor Plot 1');
+            oPlotter.defineFigure(coPlot1, 'Reactor Plot 1');
             oPlotter.defineFigure(coPlot2, 'Reactor Plot 2');
+            oPlotter.defineFigure(coPlot3, 'Reactor Plot 3');
 
             oPlotter.plot();
         end

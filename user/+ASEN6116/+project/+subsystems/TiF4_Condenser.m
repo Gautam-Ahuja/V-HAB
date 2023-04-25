@@ -27,21 +27,23 @@ classdef TiF4_Condenser < vsys
             % Solid P2P
             ASEN6116.project.components.General_P2P(this.toStores.TiF4_Condenser_Store, 'TiF4_P2P', this.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Input, this.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Solid_Output, 'TiF4');
 
-            % Gas inlet pipes and pump
+            % Pipes
             fLength     = 1;    % Pipe length in m
             fDiameter   = 0.01; % Pipe Diameter in m
             components.matter.pipe(this, 'Pipe_1', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_2', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_3', fLength, fDiameter);
 
             % Inlet and outlet branches
-            matter.branch(this, this.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Gas_Output, {}, 'Gas_Outlet', 'Gas_to_SiF4_Condenser');
-            matter.branch(this, this.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Solid_Output, {}, 'Solid_Outlet', 'Solid_to_K_Furnace');
-            matter.branch(this, this.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Input, {'Pipe_1'}, 'TiF4_Condenser_Inlet', 'Inlet_to_TiF4_Condenser');
+            matter.branch(this, this.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Gas_Output, {'Pipe_1'}, 'Gas_Outlet', 'Gas_to_SiF4_Condenser');
+            matter.branch(this, this.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Solid_Output, {'Pipe_2'}, 'Solid_Outlet', 'Solid_to_K_Furnace');
+            matter.branch(this, this.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Input, {'Pipe_3'}, 'TiF4_Condenser_Inlet', 'Inlet_to_TiF4_Condenser');
         end
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
-            solver.matter.residual.branch(this.toBranches.Gas_to_SiF4_Condenser);
-            solver.matter.residual.branch(this.toBranches.Solid_to_K_Furnace);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_SiF4_Condenser);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_K_Furnace);
             solver.matter_multibranch.iterative.branch(this.toBranches.Inlet_to_TiF4_Condenser);
 
             this.setThermalSolvers();
