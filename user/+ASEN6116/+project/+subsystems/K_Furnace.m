@@ -52,8 +52,8 @@ classdef K_Furnace < vsys
             solver.matter.residual.branch(this.toBranches.KF_Electrolyzer_to_K_Furnace);
             solver.matter.residual.branch(this.toBranches.Liquid_to_KF_Electrolyzer);
             solver.matter.residual.branch(this.toBranches.Solid_to_Metal_Output)
-            solver.matter.residual.branch(this.toBranches.O2_to_K_Furnace);
-            %this.toBranches.O2_to_K_Furnace.oHandler.setFlowRate(-0.001);
+            solver.matter.manual.branch(this.toBranches.O2_to_K_Furnace);
+            this.toBranches.O2_to_K_Furnace.oHandler.setFlowRate(-0.001);
 
             this.setThermalSolvers();
         end
