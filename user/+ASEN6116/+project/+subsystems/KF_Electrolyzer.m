@@ -37,6 +37,10 @@ classdef KF_Electrolyzer < vsys
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
 
+            solver.matter.residual.branch(this.toBranches.Gas_to_Regolith_Reactor);
+            solver.matter.residual.branch(this.toBranches.Solid_to_K_Furnace);
+            solver.matter.residual.branch(this.toBranches.Inlet_to_KF_Electrolyzer);
+
             this.setThermalSolvers();
         end
     end

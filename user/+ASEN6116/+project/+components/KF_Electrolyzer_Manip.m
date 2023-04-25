@@ -25,6 +25,7 @@ classdef KF_Electrolyzer_Manip < matter.manips.substance.stationary
             afPartialFlowRates(this.oMT.tiN2I.K) = fKProduction;
 
             update@matter.manips.substance.stationary(this, afPartialFlowRates);
+            this.trigger('KF_Electrolyzer_Manip_Update');
         end
     end
 end

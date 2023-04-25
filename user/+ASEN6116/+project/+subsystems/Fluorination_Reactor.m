@@ -15,37 +15,44 @@ classdef Fluorination_Reactor < vsys
             matter.store(this, 'Fluorination_Reactor_Store', 1);
 
             % Phases
-            matter.phases.gas(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Input', struct('O2', 0.1, 'F2', 0.1), 0.25, 293);
-            % Added by Gautam
-            matter.phases.solid(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Solid_Input', struct('Fe', 1, 'MgO', 1, 'CaO', 1, 'Al', 1, 'Na2O', 1, 'TiO2', 1), 293);
-            matter.phases.mixture(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Mix','solid', struct('Fe', 1, 'MgO', 1, 'CaO', 1, 'Al', 1, 'Na2O', 1, 'TiO2', 1), 293, 1e5);
-
+            matter.phases.mixture(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Input','solid', struct('O2', 0.1, 'F2', 0.1, 'Fe', 1, 'MgO', 1, 'CaO', 1, 'Al', 1, 'Na2O', 1, 'TiO2', 1), 293, 1e5);
             matter.phases.gas(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Gas_Output', struct('O2', 0.1) , 0.25, 293);
             matter.phases.solid(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Solid_Output', struct('FeF3', 1, 'MgF2', 1, 'CaF2', 1, 'AlF3', 1, 'NaF', 1), 293);
 
-            % Manip (edit to have the mixture
-            ASEN6116.project.components.Fluorination_Reactor_Manip('Fluorination_Reactor_Manip', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Mix);
+            % Manip
+            ASEN6116.project.components.Fluorination_Reactor_Manip('Fluorination_Reactor_Manip', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input);
 
             % Gaseous P2Ps
-            ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Reactor_Store, 'O2_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Mix, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Gas_Output, 'O2');
+            ASEN6116.project.components.Fluorination_Reactor_P2P(this.toStores.Fluorination_Reactor_Store, 'O2_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Gas_Output, 'O2');
 
             % Solid P2Ps
-            ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Reactor_Store, 'FeF3_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Mix, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, 'FeF3');
-            ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Reactor_Store, 'MgF2_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Mix, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, 'MgF2');
-            ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Reactor_Store, 'CaF2_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Mix, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, 'CaF2');
-            ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Reactor_Store, 'AlF3_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Mix, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, 'AlF3');
-            ASEN6116.project.components.General_P2P(this.toStores.Fluorination_Reactor_Store, 'NaF_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Mix, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, 'NaF');
+            ASEN6116.project.components.Fluorination_Reactor_P2P(this.toStores.Fluorination_Reactor_Store, 'FeF3_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, 'FeF3');
+            ASEN6116.project.components.Fluorination_Reactor_P2P(this.toStores.Fluorination_Reactor_Store, 'MgF2_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, 'MgF2');
+            ASEN6116.project.components.Fluorination_Reactor_P2P(this.toStores.Fluorination_Reactor_Store, 'CaF2_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, 'CaF2');
+            ASEN6116.project.components.Fluorination_Reactor_P2P(this.toStores.Fluorination_Reactor_Store, 'AlF3_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, 'AlF3');
+            ASEN6116.project.components.Fluorination_Reactor_P2P(this.toStores.Fluorination_Reactor_Store, 'NaF_P2P', this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, 'NaF');
+
+            % Gas inlet pipes and pump
+            fLength     = 1;    % Pipe length in m
+            fDiameter   = 0.01; % Pipe Diameter in m
+            components.matter.pipe(this, 'Pipe_1', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_2', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_3', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_4', fLength, fDiameter);
 
             % Inlet and outlet branches
-            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Gas_Output, {}, 'Gas_Outlet', 'Gas_to_O2_Storage');
-            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, {}, 'Solid_Outlet', 'Solid_to_K_Furnace');
-            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, {}, 'Fluorination_Reactor_Inlet', 'Inlet_to_Fluorination_Reactor');
-            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Input, {}, 'Solid_Inlet', 'Solid_Inlet_to_Fluorination_Reactor');
-
+            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Gas_Output, {'Pipe_1'}, 'Gas_Outlet', 'Gas_to_O2_Storage');
+            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, {'Pipe_2'}, 'Solid_Outlet', 'Solid_to_K_Furnace');
+            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, {'Pipe_3'}, 'Fluorination_Reactor_Gas_Inlet', 'Gas_Inlet_to_Fluorination_Reactor');
+            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, {'Pipe_4'}, 'Fluorination_Reactor_Solid_Inlet', 'Solid_Inlet_to_Fluorination_Reactor');
         end
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_O2_Storage);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_K_Furnace);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_Inlet_to_Fluorination_Reactor);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_Inlet_to_Fluorination_Reactor);
 
             this.setThermalSolvers();
         end
@@ -58,12 +65,12 @@ classdef Fluorination_Reactor < vsys
     end
 
     methods (Access = public)
-        function setIfFlows(this, sReactor_Inlet, sSolidReactor_Inlet, sGas_Outlet, sSolid_Outlet)
+        function setIfFlows(this, sReactor_Gas_Inlet, sReactor_Solid_Inlet, sGas_Outlet, sSolid_Outlet)
             % This function connects the system and subsystem level branches with
             % each other. It uses the connectIF function provided by the
             % matter.container class
-            this.connectIF('Fluorination_Reactor_Inlet',  sReactor_Inlet);
-            this.connectIF('Solid_Inlet',  sSolidReactor_Inlet);
+            this.connectIF('Fluorination_Reactor_Gas_Inlet',  sReactor_Gas_Inlet);
+            this.connectIF('Fluorination_Reactor_Solid_Inlet',  sReactor_Solid_Inlet);
             this.connectIF('Gas_Outlet', sGas_Outlet);
             this.connectIF('Solid_Outlet', sSolid_Outlet);
         end

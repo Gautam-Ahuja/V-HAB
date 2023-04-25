@@ -15,8 +15,6 @@ classdef Regolith_Reactor < vsys
             matter.store(this, 'Regolith_Reactor_Store', 1);
 
             % Phases
-            matter.phases.solid(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Solid_Input', struct('Regolith', 1), 293);
-            matter.phases.gas(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Gas_Input', struct('F2', 1), 0.5, 293);
             matter.phases.mixture(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Input', 'solid', struct('Regolith', 1, 'F2', 1), 293, 1e5);
             matter.phases.gas(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Gas_Output', struct('O2', 0.1, 'F2', 0.1, 'SiF4', 0.1, 'TiF4', 0.1), 0.25, 293);
             matter.phases.solid(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Solid_Output', struct('FeF3', 1, 'MgF2', 1, 'CaF2', 1, 'AlF3', 1, 'NaF', 1), 293);
@@ -24,34 +22,46 @@ classdef Regolith_Reactor < vsys
             % Manip
             ASEN6116.project.components.Regolith_Reactor_Manip('Regolith_Reactor_Manip', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input);
 
-            % Gaseous input P2P
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'Input_F2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, 'F2');
-
-            % Solid input P2P
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'Input_Regolith_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, 'Regolith');
-
             % Gaseous output P2Ps
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'O2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'O2');
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'F2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'F2');
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'SiF4_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'SiF4');
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'TiF4_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'TiF4');
+            ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'O2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'O2');
+            ASEN6116.project.components.Fluorine_P2P(this.toStores.Regolith_Reactor_Store, 'F2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'F2');
+            ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'SiF4_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'SiF4');
+            ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'TiF4_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, 'TiF4');
 
             % Solid output P2Ps
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'FeF3_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'FeF3');
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'MgF2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'MgF2');
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'CaF2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'CaF2');
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'AlF3_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'AlF3');
-            ASEN6116.project.components.General_P2P(this.toStores.Regolith_Reactor_Store, 'NaF_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'NaF');
+            ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'FeF3_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'FeF3');
+            ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'MgF2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'MgF2');
+            ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'CaF2_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'CaF2');
+            ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'AlF3_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'AlF3');
+            ASEN6116.project.components.Regolith_Reactor_P2P(this.toStores.Regolith_Reactor_Store, 'NaF_P2P', this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, 'NaF');
+
+            % Pipes
+            fLength     = 1;    % Pipe length in m
+            fDiameter   = 0.01; % Pipe Diameter in m
+            components.matter.pipe(this, 'Pipe_1', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_2', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_3', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_4', fLength, fDiameter);
 
             % Inlet and outlet branches
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, {}, 'Gas_Outlet', 'Gas_to_TiF4_Condenser');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, {}, 'Solid_Outlet', 'Solid_to_K_Furnace');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Input, {}, 'Gas_Inlet', 'Gas_Inlet_to_Regolith_Reactor');
-            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Input, {}, 'Solid_Inlet', 'Solid_Inlet_to_Regolith_Reactor');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Gas_Output, {'Pipe_1'}, 'Gas_Outlet', 'RR_Gas_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Solid_Output, {'Pipe_2'}, 'Solid_Outlet', 'RR_Solid_Branch');
+            matter.procs.exmes.mixture(this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, 'Fluorine_ExMe');
+            matter.branch(this, 'Regolith_Reactor_Store.Fluorine_ExMe', {'Pipe_3'}, 'Gas_Inlet', 'RR_Fluorine_Branch');
+            matter.branch(this, this.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input, {'Pipe_4'}, 'Solid_Inlet', 'RR_Regolith_Branch');
         end
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
+
+            solver.matter.manual.branch(this.toBranches.RR_Fluorine_Branch);
+            this.toBranches.RR_Fluorine_Branch.oHandler.setFlowRate(-3e-3);
+
+            solver.matter.manual.branch(this.toBranches.RR_Regolith_Branch);
+            this.toBranches.RR_Regolith_Branch.oHandler.setFlowRate(-1.5e-3);
+
+            solver.matter_multibranch.iterative.branch(this.toBranches.RR_Solid_Branch);
+            solver.matter_multibranch.iterative.branch(this.toBranches.RR_Gas_Branch);
 
             this.setThermalSolvers();
         end

@@ -6,6 +6,8 @@ classdef setup < simulation.infrastructure
     methods
         function this = setup(ptConfigParams, tSolverParams)
             ttMonitorConfig = struct();
+            ttMonitorConfig.oTimeStepObserver.sClass = 'simulation.monitors.timestepObserver';
+            ttMonitorConfig.oTimeStepObserver.cParams = { 0 , 100 };
             this@simulation.infrastructure('Habitat_System', ptConfigParams, tSolverParams, ttMonitorConfig);
 
             % Marrae composition
@@ -21,16 +23,32 @@ classdef setup < simulation.infrastructure
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
-            this.fSimTime = 86400; % 1 day in seconds
+            this.fSimTime = 1; % 1 day in seconds
             this.bUseTime = true;
         end
 
         function configureMonitors(this)
             %% Logging
             oLogger = this.toMonitors.oLogger;
-            oLogger.addValue('Habitat.toStores.O2_Storage.toPhases.O2_Output', 'fMass', 'kg', 'Total Oxygen Output');
-            oLogger.addValue('Habitat.toStores.Metal_Storage.toPhases.Metal_Output', 'fMass', 'kg', 'Total Metals Output');
-            oLogger.addValue('Habitat.toStores.Regolith_Supply.toPhases.Feed_Regolith', 'fMass', 'kg', 'Total Regolith Input');
+            oLogger.addValue('Habitat.toStores.Regolith_Supply.toPhases.Feed_Regolith', 'fMass', 'kg', 'Total Regolith In');
+            oLogger.addValue('Habitat.toStores.F2_Storage.toPhases.Feed_F2', 'fMass', 'kg', 'F2 Gas In');
+            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'fMass', 'kg', 'Regolith Gas Out');
+            oLogger.addValue('Habitat.toStores.Regolith_Solid_Output.toPhases.Reg_Solid_Out', 'fMass', 'kg', 'Regolith Solid Out');
+            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fMass', 'kg', 'TiF4 Gas Out');
+            oLogger.addValue('Habitat.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out', 'fMass', 'kg', 'TiF4 Solid Out');
+            oLogger.addValue('Habitat.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out', 'fMass', 'kg', 'SiF4 Gas Out');
+            oLogger.addValue('Habitat.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out', 'fMass', 'kg', 'SiF4 Solid Out');
+            oLogger.addValue('Habitat.toStores.Fluorination_Gas_Output.toPhases.Fluorination_Gas_Out', 'fMass', 'kg', 'Fluorination Gas Out');
+            oLogger.addValue('Habitat.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out', 'fMass', 'kg', 'Fluorination Solid Out');
+            oLogger.addValue('Habitat.toStores.K_Furnace_Liquid_Output.toPhases.K_Furnace_Liquid_Out', 'fMass', 'kg', 'K Furnace Liquid Out');
+            oLogger.addValue('Habitat.toStores.K_Furnace_Solid_Output.toPhases.K_Furnace_Solid_Out', 'fMass', 'kg', 'K Furnace Solid Out');
+            oLogger.addValue('Habitat.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out', 'fMass', 'kg', 'Plasma Gas Out');
+            oLogger.addValue('Habitat.toStores.Plasma_Solid_Output.toPhases.Plasma_Solid_Out', 'fMass', 'kg', 'Plasma Solid Out');
+            oLogger.addValue('Habitat.toStores.Electrolyzer_Gas_Output.toPhases.Electrolyzer_Gas_Out', 'fMass', 'kg', 'Electrolyzer Gas Out');
+            oLogger.addValue('Habitat.toStores.Electrolyzer_Solid_Output.toPhases.Electrolyzer_Solid_Out', 'fMass', 'kg', 'Electrolyzer Solid Out');
+
+            oLogger.addValue('Habitat.toChildren.TiF4_Condenser.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Input', 'fMass', 'kg', 'TiF4 Input');
+            oLogger.addValue('Habitat.toChildren.TiF4_Condenser.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Solid_Output', 'fMass', 'kg', 'TiF4 Solid Output');
         end
 
         function plot(this)
@@ -52,13 +70,31 @@ classdef setup < simulation.infrastructure
             % Defines the plotter object
             oPlotter = plot@simulation.infrastructure(this);
 
-            % Define major I/O plots
-            oPlot{1,1} = oPlotter.definePlot({'"Total Oxygen Output"'},'Total Oxygen Output');
-            oPlot{2,1} = oPlotter.definePlot({'"Total Metals Output"'},'Total Metals Output');
-            oPlot{3,1} = oPlotter.definePlot({'"Total Regpolith Input"'},'Total Regolith Input');
+            coPlot1{1,1} = oPlotter.definePlot({'"Total Regolith In"'},'Total Regolith In');
+            coPlot1{1,2} = oPlotter.definePlot({'"F2 Gas In"'}, 'F2 Gas In');
+            coPlot1{2,1} = oPlotter.definePlot({'"Regolith Gas Out"'}, 'Regolith Gas Out');
+            coPlot1{2,2} = oPlotter.definePlot({'"Regolith Solid Out"'}, 'Regolith Solid Out');
+            coPlot1{3,1} = oPlotter.definePlot({'"TiF4 Gas Out"'}, 'TiF4 Gas Out');
+            coPlot1{3,2} = oPlotter.definePlot({'"TiF4 Solid Out"'}, 'TiF4 Solid Out');
+            coPlot1{4,1} = oPlotter.definePlot({'"SiF4 Gas Out"'}, 'SiF4 Gas Out');
+            coPlot1{4,2} = oPlotter.definePlot({'"SiF4 Solid Out"'}, 'SiF4 Solid Out');
+
+            coPlot2{1,1} = oPlotter.definePlot({'"Fluorination Gas Out"'},'Fluorination Gas Out');
+            coPlot2{1,2} = oPlotter.definePlot({'"Fluorination Solid Out"'}, 'Fluorination Solid Out');
+            coPlot2{2,1} = oPlotter.definePlot({'"K Furnace Liquid Out"'}, 'K Furnace Liquid Out');
+            coPlot2{2,2} = oPlotter.definePlot({'"K Furnace Solid Out"'}, 'K Furnace Solid Out');
+            coPlot2{3,1} = oPlotter.definePlot({'"Plasma Gas Out"'}, 'Plasma Gas Out');
+            coPlot2{3,2} = oPlotter.definePlot({'"Plasma Solid Out"'}, 'Plasma Solid Out');
+            coPlot2{4,1} = oPlotter.definePlot({'"Electrolyzer Gas Out"'}, 'Electrolyzer Gas Out');
+            coPlot2{4,2} = oPlotter.definePlot({'"Electrolyzer Solid Out"'}, 'Electrolyzer Solid Out');
+
+            coPlot3{1,1} = oPlotter.definePlot({'"TiF4 Input"'}, 'TiF4 Input');
+            coPlot3{2,1} = oPlotter.definePlot({'"TiF4 Solid Output"'}, 'TiF4 Solid Output');
 
             % Define a single figure for I/O data
-            oPlotter.defineFigure(coPlot,  'Regolith Reactor Major I/Os');
+            oPlotter.defineFigure(coPlot1, 'Reactor Plot 1');
+            oPlotter.defineFigure(coPlot2, 'Reactor Plot 2');
+            oPlotter.defineFigure(coPlot3, 'Reactor Plot 3');
 
             oPlotter.plot();
         end
