@@ -23,7 +23,7 @@ classdef setup < simulation.infrastructure
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
-            this.fSimTime = 120; % 1 day in seconds
+            this.fSimTime = 10; % 1 day in seconds
             this.bUseTime = true;
         end
 
@@ -34,7 +34,7 @@ classdef setup < simulation.infrastructure
             %oLogger.addValue('Habitat.toStores.Metal_Storage.toPhases.Metal_Output', 'fMass', 'kg', 'Total Metals Output');
             oLogger.addValue('Habitat.toStores.Regolith_Supply.toPhases.Feed_Regolith', 'fMass', 'kg', 'Total Regolith Input');
             oLogger.addValue('Habitat.toStores.F2_Storage.toPhases.Feed_F2', 'fMass', 'kg', 'F2 Gas In');
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.TiF4_Gas_In', 'fMass', 'kg', 'RR Gas Out');
+            oLogger.addValue('Habitat.toStores.Fluorination_Gas_Output.toPhases.O2_Storage_In', 'fMass', 'kg', 'O2 Out');
             oLogger.addValue('Habitat.toStores.Regolith_Solid_Output.toPhases.Reg_Solid_Out', 'fMass', 'kg', 'RR Solid Out');
             oLogger.addValue('Habitat.toChildren.Regolith_Reactor.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input', 'fMass', 'kg','Reactor Input Phase');
             oLogger.addValue('Habitat.toChildren.Regolith_Reactor.toStores.Regolith_Reactor_Store.toPhases.Regolith_Reactor_Input', 'this.afMass(this.oMT.tiN2I.F2)', 'kg','Reactor Input Fluorine');
@@ -67,7 +67,7 @@ classdef setup < simulation.infrastructure
             %coPlot{2,1} = oPlotter.definePlot({'"Total Metals Output"'},'Total Metals Output');
             coPlot{1,1} = oPlotter.definePlot({'"Total Regolith Input"'},'Total Regolith Input');
             coPlot{1,2} = oPlotter.definePlot({'"F2 Gas In"'}, 'F2 Gas In');
-            coPlot{2,1} = oPlotter.definePlot({'"RR Gas Out"'}, 'RR Gas Out');
+            coPlot{2,1} = oPlotter.definePlot({'"O2 Out"'}, 'O2 Out');
             coPlot{2,2} = oPlotter.definePlot({'"RR Solid Out"'}, 'RR Solid Out');
             coPlot{3,1} = oPlotter.definePlot({'"Reactor Input Phase"'}, 'Reactor Input Phase');
             coPlot{3,2} = oPlotter.definePlot({'"Reactor Input Fluorine"'}, 'Reactor Input Fluorine');

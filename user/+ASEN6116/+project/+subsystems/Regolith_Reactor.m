@@ -12,7 +12,7 @@ classdef Regolith_Reactor < vsys
         function createMatterStructure(this)
             createMatterStructure@vsys(this);
             % Store
-            matter.store(this, 'Regolith_Reactor_Store', .01);
+            matter.store(this, 'Regolith_Reactor_Store', 1);
 
             % Phases
             matter.phases.mixture(this.toStores.Regolith_Reactor_Store, 'Regolith_Reactor_Input', 'solid', struct('Regolith', 1, 'F2', 1), 293, 1e5);

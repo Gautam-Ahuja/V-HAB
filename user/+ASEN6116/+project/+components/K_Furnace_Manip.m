@@ -45,7 +45,6 @@ classdef K_Furnace_Manip < matter.manips.substance.stationary
 
             % Set output flows
             afPartialFlowRates = zeros(1, this.oPhase.oMT.iSubstances);
-            afPartialFlowRates(this.oMT.tiN2I.KF) = fKFProduction;
             afPartialFlowRates(this.oMT.tiN2I.Fe) = fFeProduction;
             afPartialFlowRates(this.oMT.tiN2I.MgO) = fMgOProduction;
             afPartialFlowRates(this.oMT.tiN2I.CaO) = fCaOProduction;
@@ -67,6 +66,7 @@ classdef K_Furnace_Manip < matter.manips.substance.stationary
             afPartialFlowRates(this.oMT.tiN2I.KF) = -sum(afPartialFlowRates);
 
             update@matter.manips.substance.stationary(this, afPartialFlowRates);
+            this.trigger('K_Furnace_Manip_Update');
         end
     end
 end

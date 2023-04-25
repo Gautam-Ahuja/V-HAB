@@ -12,7 +12,7 @@ classdef KF_Electrolyzer < vsys
         function createMatterStructure(this)
             createMatterStructure@vsys(this);
             % Store
-            matter.store(this, 'KF_Electrolyzer_Store', .01);
+            matter.store(this, 'KF_Electrolyzer_Store', 1);
 
             % Phases
             matter.phases.liquid(this.toStores.KF_Electrolyzer_Store, 'KF_Electrolyzer_Input', struct('KF', 1), 293, 1e5);
@@ -36,6 +36,10 @@ classdef KF_Electrolyzer < vsys
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
+
+            solver.matter.residual.branch(this.toBranches.Gas_to_Regolith_Reactor);
+            solver.matter.residual.branch(this.toBranches.Solid_to_K_Furnace);
+            solver.matter.residual.branch(this.toBranches.Inlet_to_KF_Electrolyzer);
 
             this.setThermalSolvers();
         end
