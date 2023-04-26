@@ -28,18 +28,25 @@ classdef Plasma_Reactor < vsys
             % Solid P2P
             ASEN6116.project.components.Plasma_Reactor_P2P(this.toStores.Plasma_Reactor_Store, 'Si_P2P', this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Input, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Solid_Output, 'Si');
 
+            % Pipes
+            fLength     = 1;    % Pipe length in m
+            fDiameter   = 0.01; % Pipe Diameter in m
+            components.matter.pipe(this, 'Pipe_1', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_2', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_3', fLength, fDiameter);
+
             % Inlet and outlet branches
-            matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Gas_Output, {}, 'Gas_Outlet', 'Gas_to_Regolith_Reactor');
-            matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Solid_Output, {}, 'Solid_Outlet', 'Solid_to_Metal_Output');
-            matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Input, {}, 'Plasma_Reactor_Inlet', 'Inlet_to_Plasma_Reactor');
+            matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Gas_Output, {'Pipe_1'}, 'Gas_Outlet', 'Gas_to_Regolith_Reactor');
+            matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Solid_Output, {'Pipe_2'}, 'Solid_Outlet', 'Solid_to_Metal_Output');
+            matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Input, {'Pipe_3'}, 'Plasma_Reactor_Inlet', 'Inlet_to_Plasma_Reactor');
         end
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
 
-            solver.matter.residual.branch(this.toBranches.Gas_to_Regolith_Reactor);
-            solver.matter.residual.branch(this.toBranches.Solid_to_Metal_Output);
-            solver.matter.residual.branch(this.toBranches.Inlet_to_Plasma_Reactor);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_Regolith_Reactor);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_Metal_Output);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Inlet_to_Plasma_Reactor);
             this.setThermalSolvers();
         end
     end

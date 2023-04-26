@@ -28,18 +28,26 @@ classdef KF_Electrolyzer < vsys
             % Solid P2P
             ASEN6116.project.components.General_P2P(this.toStores.KF_Electrolyzer_Store, 'K_P2P', this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Input, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Solid_Output, 'K');
 
+            % Pipes
+            fLength     = 1;    % Pipe length in m
+            fDiameter   = 0.01; % Pipe Diameter in m
+            components.matter.pipe(this, 'Pipe_1', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_2', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_3', fLength, fDiameter);
+
+
             % Inlet and outlet branches
-            matter.branch(this, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Gas_Output, {}, 'Gas_Outlet', 'Gas_to_Regolith_Reactor');
-            matter.branch(this, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Solid_Output, {}, 'Solid_Outlet', 'Solid_to_K_Furnace');
-            matter.branch(this, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Input, {}, 'KF_Electrolyzer_Inlet', 'Inlet_to_KF_Electrolyzer');
+            matter.branch(this, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Gas_Output, {'Pipe_1'}, 'Gas_Outlet', 'Gas_to_Regolith_Reactor');
+            matter.branch(this, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Solid_Output, {'Pipe_2'}, 'Solid_Outlet', 'Solid_to_K_Furnace');
+            matter.branch(this, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Input, {'Pipe_3'}, 'KF_Electrolyzer_Inlet', 'Inlet_to_KF_Electrolyzer');
         end
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
 
-            solver.matter.residual.branch(this.toBranches.Gas_to_Regolith_Reactor);
-            solver.matter.residual.branch(this.toBranches.Solid_to_K_Furnace);
-            solver.matter.residual.branch(this.toBranches.Inlet_to_KF_Electrolyzer);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_Regolith_Reactor);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_K_Furnace);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Inlet_to_KF_Electrolyzer);
 
             this.setThermalSolvers();
         end

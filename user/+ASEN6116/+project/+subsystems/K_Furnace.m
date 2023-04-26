@@ -33,25 +33,36 @@ classdef K_Furnace < vsys
             ASEN6116.project.components.K_Furnace_P2P(this.toStores.K_Furnace_Store, 'Na2O_P2P', this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Solid_Output, 'Na2O');
             ASEN6116.project.components.K_Furnace_P2P(this.toStores.K_Furnace_Store, 'TiO2_P2P', this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Solid_Output, 'TiO2');
 
+            % Pipes
+            fLength     = 1;    % Pipe length in m
+            fDiameter   = 0.01; % Pipe Diameter in m
+            components.matter.pipe(this, 'Pipe_1', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_2', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_3', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_4', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_5', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_6', fLength, fDiameter);
+            components.matter.pipe(this, 'Pipe_7', fLength, fDiameter);
+
             % Inlet and outlet branches
-            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Liquid_Output, {}, 'Liquid_Outlet', 'Liquid_to_KF_Electrolyzer');
-            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Solid_Output, {}, 'Solid_Outlet', 'Solid_to_Metal_Output');
-            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, {}, 'K_Furnace_Regolith_Reactor_Inlet', 'Regolith_Reactor_to_K_Furnace');
-            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, {}, 'K_Furnace_Fluorination_Reactor_Inlet', 'Fluorination_Reactor_to_K_Furnace');
-            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, {}, 'K_Furnace_TiF4_Condenser_Inlet', 'TiF4_Condenser_to_K_Furnace');
-            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, {}, 'K_Furnace_KF_Electrolyzer_Inlet', 'KF_Electrolyzer_to_K_Furnace');
-            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, {}, 'K_Furnace_O2_Inlet', 'O2_to_K_Furnace');
+            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Liquid_Output, {'Pipe_1'}, 'Liquid_Outlet', 'Liquid_to_KF_Electrolyzer');
+            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Solid_Output, {'Pipe_2'}, 'Solid_Outlet', 'Solid_to_Metal_Output');
+            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, {'Pipe_3'}, 'K_Furnace_Regolith_Reactor_Inlet', 'Regolith_Reactor_to_K_Furnace');
+            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, {'Pipe_4'}, 'K_Furnace_Fluorination_Reactor_Inlet', 'Fluorination_Reactor_to_K_Furnace');
+            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, {'Pipe_5'}, 'K_Furnace_TiF4_Condenser_Inlet', 'TiF4_Condenser_to_K_Furnace');
+            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, {'Pipe_6'}, 'K_Furnace_KF_Electrolyzer_Inlet', 'KF_Electrolyzer_to_K_Furnace');
+            matter.branch(this, this.toStores.K_Furnace_Store.toPhases.K_Furnace_Input, {'Pipe_7'}, 'K_Furnace_O2_Inlet', 'O2_to_K_Furnace');
         end
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
 
-            solver.matter.residual.branch(this.toBranches.Regolith_Reactor_to_K_Furnace);
-            solver.matter.residual.branch(this.toBranches.Fluorination_Reactor_to_K_Furnace);
-            solver.matter.residual.branch(this.toBranches.TiF4_Condenser_to_K_Furnace);
-            solver.matter.residual.branch(this.toBranches.KF_Electrolyzer_to_K_Furnace);
-            solver.matter.residual.branch(this.toBranches.Liquid_to_KF_Electrolyzer);
-            solver.matter.residual.branch(this.toBranches.Solid_to_Metal_Output)
+            solver.matter_multibranch.iterative.branch(this.toBranches.Regolith_Reactor_to_K_Furnace);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Fluorination_Reactor_to_K_Furnace);
+            solver.matter_multibranch.iterative.branch(this.toBranches.TiF4_Condenser_to_K_Furnace);
+            solver.matter_multibranch.iterative.branch(this.toBranches.KF_Electrolyzer_to_K_Furnace);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Liquid_to_KF_Electrolyzer);
+            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_Metal_Output)
             solver.matter.manual.branch(this.toBranches.O2_to_K_Furnace);
             this.toBranches.O2_to_K_Furnace.oHandler.setFlowRate(-0.001);
 

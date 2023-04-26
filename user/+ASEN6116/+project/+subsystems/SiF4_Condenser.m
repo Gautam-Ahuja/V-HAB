@@ -17,7 +17,7 @@ classdef SiF4_Condenser < vsys
             % Phases
             matter.phases.gas(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Input', struct('O2', 0.1, 'F2', 0.1, 'SiF4', 0.1), 0.25, 293);
             matter.phases.gas(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Gas_Output', struct('O2', 0.1, 'F2', 0.1), 0.25, 293);
-            matter.phases.solid(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Solid_Output', struct('SiF4', 1), 293);
+            matter.phases.solid(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Solid_Output', struct('SiF4', 0.1), 293);
 
             % Gaseous P2Ps
             ASEN6116.project.components.General_P2P(this.toStores.SiF4_Condenser_Store, 'O2_P2P', this.toStores.SiF4_Condenser_Store.toPhases.SiF4_Condenser_Input, this.toStores.SiF4_Condenser_Store.toPhases.SiF4_Condenser_Gas_Output, 'O2');
