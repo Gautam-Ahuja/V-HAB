@@ -88,8 +88,8 @@ classdef setup < simulation.infrastructure
             coPlot2{4,1} = oPlotter.definePlot({'"Electrolyzer Gas Out"'}, 'Electrolyzer Gas Out');
             coPlot2{4,2} = oPlotter.definePlot({'"Electrolyzer Solid Out"'}, 'Electrolyzer Solid Out');
 
-            coPlot3{1,1} = oPlotter.definePlot({'"TiF4 Input"'}, 'TiF4 Input');
-            coPlot3{2,1} = oPlotter.definePlot({'"TiF4 Solid Output"'}, 'TiF4 Solid Output');
+            coPlot3{1,1} = oPlotter.definePlot({'"Total Regolith In"'}, 'Input Regolith Store Mass');
+            coPlot3{2,1} = oPlotter.definePlot({'"Fluorination Gas Out"'}, 'Output Oxygen Store Mass');
 
             % Define a single figure for I/O data
             oPlotter.defineFigure(coPlot1, 'Reactor Plot 1');

@@ -38,7 +38,7 @@ classdef Plasma_Reactor < vsys
             % Inlet and outlet branches
             matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Gas_Output, {'Pipe_1'}, 'Gas_Outlet', 'Gas_to_Regolith_Reactor');
             matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Solid_Output, {'Pipe_2'}, 'Solid_Outlet', 'Solid_to_Metal_Output');
-            matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Input, {'Pipe_3'}, 'Plasma_Reactor_Inlet', 'Inlet_to_Plasma_Reactor');
+            matter.branch(this, this.toStores.Plasma_Reactor_Store.toPhases.Plasma_Reactor_Input, {'Pipe_3'}, 'Plasma_Reactor_Inlets', 'Inlet_to_Plasma_Reactor');
         end
 
         function createSolverStructure(this)
