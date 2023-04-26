@@ -62,7 +62,7 @@ classdef Plasma_Reactor < vsys
             % This function connects the system and subsystem level branches with
             % each other. It uses the connectIF function provided by the
             % matter.container class
-            this.connectIF('Plasma_Reactor_Inlet',  sReactor_Inlet);
+            this.connectIF('Plasma_Reactor_Inlets',  sReactor_Inlet);
             this.connectIF('Gas_Outlet', sGas_Outlet);
             this.connectIF('Solid_Outlet', sSolid_Outlet);
         end

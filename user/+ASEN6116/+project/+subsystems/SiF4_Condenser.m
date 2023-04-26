@@ -36,7 +36,7 @@ classdef SiF4_Condenser < vsys
             % Inlet and outlet branches
             matter.branch(this, this.toStores.SiF4_Condenser_Store.toPhases.SiF4_Condenser_Gas_Output, {'Pipe_1'}, 'Gas_Outlet', 'Gas_to_Fluorination_Reactor');
             matter.branch(this, this.toStores.SiF4_Condenser_Store.toPhases.SiF4_Condenser_Solid_Output, {'Pipe_2'}, 'Solid_Outlet', 'Solid_to_Plasma_Reactor');
-            matter.branch(this, this.toStores.SiF4_Condenser_Store.toPhases.SiF4_Condenser_Input, {'Pipe_3'}, 'SiF4_Condenser_Inlet', 'Inlet_to_SiF4_Condenser');
+            matter.branch(this, this.toStores.SiF4_Condenser_Store.toPhases.SiF4_Condenser_Input, {'Pipe_3'}, 'SiF4_Condenser_Inlets', 'Inlet_to_SiF4_Condenser');
         end
 
         function createSolverStructure(this)
@@ -60,7 +60,7 @@ classdef SiF4_Condenser < vsys
             % This function connects the system and subsystem level branches with
             % each other. It uses the connectIF function provided by the
             % matter.container class
-            this.connectIF('SiF4_Condenser_Inlet',  sCondenser_Inlet);
+            this.connectIF('SiF4_Condenser_Inlets',  sCondenser_Inlet);
             this.connectIF('Gas_Outlet', sGas_Outlet);
             this.connectIF('Solid_Outlet', sSolid_Outlet);
         end

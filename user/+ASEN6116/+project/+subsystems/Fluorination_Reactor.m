@@ -43,8 +43,8 @@ classdef Fluorination_Reactor < vsys
             % Inlet and outlet branches
             matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Gas_Output, {'Pipe_1'}, 'Gas_Outlet', 'Gas_to_O2_Storage');
             matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Solid_Output, {'Pipe_2'}, 'Solid_Outlet', 'Solid_to_K_Furnace');
-            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, {'Pipe_3'}, 'Fluorination_Reactor_Gas_Inlet', 'Gas_Inlet_to_Fluorination_Reactor');
-            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, {'Pipe_4'}, 'Fluorination_Reactor_Solid_Inlet', 'Solid_Inlet_to_Fluorination_Reactor');
+            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, {'Pipe_3'}, 'Fluorination_Reactor_Gas_Inlets', 'Gas_Inlet_to_Fluorination_Reactor');
+            matter.branch(this, this.toStores.Fluorination_Reactor_Store.toPhases.Fluorination_Reactor_Input, {'Pipe_4'}, 'Fluorination_Reactor_Solid_Inlets', 'Solid_Inlet_to_Fluorination_Reactor');
         end
 
         function createSolverStructure(this)
@@ -69,8 +69,8 @@ classdef Fluorination_Reactor < vsys
             % This function connects the system and subsystem level branches with
             % each other. It uses the connectIF function provided by the
             % matter.container class
-            this.connectIF('Fluorination_Reactor_Gas_Inlet',  sReactor_Gas_Inlet);
-            this.connectIF('Fluorination_Reactor_Solid_Inlet',  sReactor_Solid_Inlet);
+            this.connectIF('Fluorination_Reactor_Gas_Inlets',  sReactor_Gas_Inlet);
+            this.connectIF('Fluorination_Reactor_Solid_Inlets',  sReactor_Solid_Inlet);
             this.connectIF('Gas_Outlet', sGas_Outlet);
             this.connectIF('Solid_Outlet', sSolid_Outlet);
         end
