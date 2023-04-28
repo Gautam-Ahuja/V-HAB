@@ -55,13 +55,13 @@ classdef Regolith_Reactor < vsys
             createSolverStructure@vsys(this);
 
             solver.matter.manual.branch(this.toBranches.RR_Fluorine_Branch);
-            this.toBranches.RR_Fluorine_Branch.oHandler.setFlowRate(-3e-3);
+            this.toBranches.RR_Fluorine_Branch.oHandler.setFlowRate(-1.5e-3);
 
             solver.matter.manual.branch(this.toBranches.RR_Regolith_Branch);
-            this.toBranches.RR_Regolith_Branch.oHandler.setFlowRate(-1.5e-3);
+            this.toBranches.RR_Regolith_Branch.oHandler.setFlowRate(-1e-3);
 
-            solver.matter_multibranch.iterative.branch(this.toBranches.RR_Solid_Branch);
-            solver.matter_multibranch.iterative.branch(this.toBranches.RR_Gas_Branch);
+            solver.matter.residual.branch(this.toBranches.RR_Solid_Branch);
+            solver.matter.interval.branch(this.toBranches.RR_Gas_Branch);
 
             this.setThermalSolvers();
         end
