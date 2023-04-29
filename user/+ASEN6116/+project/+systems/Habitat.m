@@ -8,11 +8,12 @@ classdef Habitat < vsys
             this@vsys(oParent, sName, 30);
             eval(this.oRoot.oCfgParams.configCode(this));
 
-%             ASEN6116.project.subsystems.Fluorination_Reactor(this, 'Fluorination_Reactor');             ASEN6116.project.subsystems.K_Furnace(this, 'K_Furnace');
+             ASEN6116.project.subsystems.Fluorination_Reactor(this, 'Fluorination_Reactor');
+%              ASEN6116.project.subsystems.K_Furnace(this, 'K_Furnace');
 %             ASEN6116.project.subsystems.KF_Electrolyzer(this, 'KF_Electrolyzer');
 %             ASEN6116.project.subsystems.Plasma_Reactor(this, 'Plasma_Reactor');
 %             ASEN6116.project.subsystems.Regolith_Reactor(this, 'Regolith_Reactor');
-            ASEN6116.project.subsystems.SiF4_Condenser(this, 'SiF4_Condenser');
+%             ASEN6116.project.subsystems.SiF4_Condenser(this, 'SiF4_Condenser');
 %             ASEN6116.project.subsystems.TiF4_Condenser(this, 'TiF4_Condenser');
         end
 
@@ -38,27 +39,27 @@ classdef Habitat < vsys
 %             % TiF4 Condenser Solid Output and Potassium Furnace Input
 %             matter.store(this, 'TiF4_Solid_Output', 10);
 %             matter.phases.solid(this.toStores.TiF4_Solid_Output, 'TiF4_Solid_Out', struct('TiF4', .029), 293);
-
-            % TiF4 Condenser Gas Output and SiF4 Condenser Input
-            matter.store(this, 'TiF4_Gas_Output', 10);
-            matter.phases.gas(this.toStores.TiF4_Gas_Output, 'TiF4_Gas_Out', struct('O2', .245, 'F2', .238, 'SiF4', .488), 1, 293);
-
-            % SiF4 Condenser Solid Output and Plasma Reactor Input
-            matter.store(this, 'SiF4_Solid_Output', 10);
-            matter.phases.solid(this.toStores.SiF4_Solid_Output, 'SiF4_Solid_Out', struct('SiF4', 0.1), 293);
+% 
+%             % TiF4 Condenser Gas Output and SiF4 Condenser Input
+%             matter.store(this, 'TiF4_Gas_Output', 10);
+%             matter.phases.gas(this.toStores.TiF4_Gas_Output, 'TiF4_Gas_Out', struct('O2', .245, 'F2', .238, 'SiF4', .488), 1, 293);
+% 
+%             % SiF4 Condenser Solid Output and Plasma Reactor Input
+%             matter.store(this, 'SiF4_Solid_Output', 10);
+%             matter.phases.solid(this.toStores.SiF4_Solid_Output, 'SiF4_Solid_Out', struct('SiF4', 0.1), 293);
 
             % SiF4 Condenser Gas Output and Fluorination Reactor Input
             matter.store(this, 'SiF4_Gas_Output', 10);
             matter.phases.gas(this.toStores.SiF4_Gas_Output, 'SiF4_Gas_Out', struct('O2', 0.1, 'F2', 0.1), 1, 293);
 
-%             % Fluorination Reactor Solid Output and Potassium Furnace Input
-%             matter.store(this, 'Fluorination_Solid_Output', 10);
-%             matter.phases.solid(this.toStores.Fluorination_Solid_Output, 'Fluorination_Solid_Out', struct('FeF3', 0.1, 'MgF2', 0.1, 'CaF2', 0.1, 'AlF3', 0.1, 'NaF', 0.1), 293);
-% 
-%             % Fluorination Reactor Gas Output and Oxygen Storage Input
-%             matter.store(this, 'Fluorination_Gas_Output', 10);
-%             matter.phases.gas(this.toStores.Fluorination_Gas_Output, 'Fluorination_Gas_Out', struct('O2', 0.1), 1, 293);
-% 
+            % Fluorination Reactor Solid Output and Potassium Furnace Input
+            matter.store(this, 'Fluorination_Solid_Output', 10);
+            matter.phases.solid(this.toStores.Fluorination_Solid_Output, 'Fluorination_Solid_Out', struct('FeF3', 0.1, 'MgF2', 0.1, 'CaF2', 0.1, 'AlF3', 0.1, 'NaF', 0.1), 293);
+
+            % Fluorination Reactor Gas Output and Oxygen Storage Input
+            matter.store(this, 'Fluorination_Gas_Output', 10);
+            matter.phases.gas(this.toStores.Fluorination_Gas_Output, 'Fluorination_Gas_Out', struct('O2', 0.1), 1, 293);
+
 %             % Plasma Reactor Solid Output and Silicon Storage Input
 %             matter.store(this, 'Plasma_Solid_Output', 10);
 %             matter.phases.solid(this.toStores.Plasma_Solid_Output, 'Plasma_Solid_Out', struct('Si', 0.1), 293);
@@ -100,13 +101,13 @@ classdef Habitat < vsys
 %             % Connect IF Flows
 %             this.toChildren.TiF4_Condenser.setIfFlows('TiF4_Condenser_Inlet', 'TiF4_Condenser_Gas_Outlet', 'TiF4_Condenser_Solid_Outlet');
 % 
-            % SiF4 Condenser Input Stores -> SiF4 Condenser
-            matter.branch(this, 'SiF4_Condenser_Inlet', {}, this.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out);
-            % SiF4 Condenser -> SiF4 Condenser Output Stores
-            matter.branch(this, 'SiF4_Condenser_Solid_Outlet', {}, this.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out);
-            matter.branch(this, 'SiF4_Condenser_Gas_Outlet', {}, this.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out);
-            % Connect IF Flows
-            this.toChildren.SiF4_Condenser.setIfFlows('SiF4_Condenser_Inlet', 'SiF4_Condenser_Gas_Outlet', 'SiF4_Condenser_Solid_Outlet');
+%             % SiF4 Condenser Input Stores -> SiF4 Condenser
+%             matter.branch(this, 'SiF4_Condenser_Inlet', {}, this.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out);
+%             % SiF4 Condenser -> SiF4 Condenser Output Stores
+%             matter.branch(this, 'SiF4_Condenser_Solid_Outlet', {}, this.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out);
+%             matter.branch(this, 'SiF4_Condenser_Gas_Outlet', {}, this.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out);
+%             % Connect IF Flows
+%             this.toChildren.SiF4_Condenser.setIfFlows('SiF4_Condenser_Inlet', 'SiF4_Condenser_Gas_Outlet', 'SiF4_Condenser_Solid_Outlet');
 % 
 %             % Electrolyzer Input Stores -> Electrolyzer
 %             matter.branch(this, 'KF_In', {}, this.toStores.K_Furnace_Liquid_Output.toPhases.K_Furnace_Liquid_Out);
@@ -126,14 +127,14 @@ classdef Habitat < vsys
 %             matter.branch(this, 'K_Furnace_to_Electrolyzer', {}, this.toStores.K_Furnace_Liquid_Output.toPhases.K_Furnace_Liquid_Out);
 %             this.toChildren.K_Furnace.setIfFlows('RR_to_K_Furnace', 'Fluorination_to_K_Furnace', 'TiF4_to_K_Furnace', 'Electrolyzer_to_K_Furnace', 'O2_Feed_to_K_Furnace', 'K_Furnace_to_Electrolyzer', 'K_Furnace_to_Metal_Output');
 % 
-%             % Fluorination Reactor Input Stores -> Fluorination Reactor
-%             matter.branch(this, 'Fluorination_Reactor_Gas_Inlet', {}, this.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out);
-%             matter.branch(this, 'Fluorination_Reactor_Solid_Inlet', {}, this.toStores.K_Furnace_Solid_Output.toPhases.K_Furnace_Solid_Out);
-%             % Fluorination Reactor -> Fluorination Reactor Output Stores
-%             matter.branch(this, 'Fluorination_Reactor_Solid_Outlet', {}, this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out);
-%             matter.branch(this, 'Fluorination_Reactor_Gas_Outlet', {}, this.toStores.Fluorination_Gas_Output.toPhases.Fluorination_Gas_Out);
-%             % Connect IF Flows
-%             this.toChildren.Fluorination_Reactor.setIfFlows('Fluorination_Reactor_Gas_Inlet', 'Fluorination_Reactor_Solid_Inlet', 'Fluorination_Reactor_Gas_Outlet', 'Fluorination_Reactor_Solid_Outlet');
+            % Fluorination Reactor Input Stores -> Fluorination Reactor
+            matter.branch(this, 'Fluorination_Reactor_Gas_Inlet', {}, this.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out);
+            matter.branch(this, 'Fluorination_Reactor_Solid_Inlet', {}, this.toStores.K_Furnace_Solid_Output.toPhases.K_Furnace_Solid_Out);
+            % Fluorination Reactor -> Fluorination Reactor Output Stores
+            matter.branch(this, 'Fluorination_Reactor_Solid_Outlet', {}, this.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out);
+            matter.branch(this, 'Fluorination_Reactor_Gas_Outlet', {}, this.toStores.Fluorination_Gas_Output.toPhases.Fluorination_Gas_Out);
+            % Connect IF Flows
+            this.toChildren.Fluorination_Reactor.setIfFlows('Fluorination_Reactor_Gas_Inlet', 'Fluorination_Reactor_Solid_Inlet', 'Fluorination_Reactor_Gas_Outlet', 'Fluorination_Reactor_Solid_Outlet');
 % 
 %             % Plasma Reactor Input Stores -> Plasma Reactor
 %             matter.branch(this, 'Plasma_Reactor_Inlet', {}, this.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out);
