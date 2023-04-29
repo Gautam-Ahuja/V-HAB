@@ -23,22 +23,19 @@ classdef setup < simulation.infrastructure
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
-            this.fSimTime = 1800; % 1 day in seconds
+            this.fSimTime = 60; % 1800; % 1 day in seconds
             this.bUseTime = true;
         end
 
         function configureMonitors(this)
             %% Logging
             oLogger = this.toMonitors.oLogger;
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'fMass', 'kg', 'Total Gaseous Input');
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'this.afMass(this.oMT.tiN2I.O2)', 'kg', 'Oxygen Input');
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'this.afMass(this.oMT.tiN2I.TiF4)', 'kg', 'TiF4 Input');
-            oLogger.addValue('Habitat.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out', 'fMass', 'kg', 'TiF4 Solid Output');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afMass(this.oMT.tiN2I.O2)', 'kg', 'Oxygen Output');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fMass', 'kg', 'Gaseous Output');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fPressure', 'Pa', 'Total Output Pressure');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afPP(this.oMT.tiN2I.O2)', 'Pa', 'Output ppO2');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afPP(this.oMT.tiN2I.TiF4)', 'Pa', 'Output ppTiF4');
+            oLogger.addValue('Habitat.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out', 'fMass', 'kg', 'SiF4 Solid Output');
+            oLogger.addValue('Habitat.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out', 'this.afMass(this.oMT.tiN2I.O2)', 'kg', 'Oxygen Output');
+            oLogger.addValue('Habitat.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out', 'fMass', 'kg', 'Gaseous Output');
+            oLogger.addValue('Habitat.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out', 'fPressure', 'Pa', 'Total Output Pressure');
+            oLogger.addValue('Habitat.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out', 'this.afPP(this.oMT.tiN2I.O2)', 'Pa', 'Output ppO2');
+            oLogger.addValue('Habitat.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out', 'this.afPP(this.oMT.tiN2I.TiF4)', 'Pa', 'Output ppSiF4');
 
 %             oLogger.addValue('Habitat.toStores.Regolith_Supply.toPhases.Feed_Regolith', 'fMass', 'kg', 'Total Regolith In');
 %             oLogger.addValue('Habitat.toStores.F2_Storage.toPhases.Feed_F2', 'fMass', 'kg', 'F2 Gas In');
@@ -80,9 +77,9 @@ classdef setup < simulation.infrastructure
             % Defines the plotter object
             oPlotter = plot@simulation.infrastructure(this);
 
-            coPlot1{1,1} = oPlotter.definePlot({'"Total Gaseous Input"', '"Oxygen Input"', '"TiF4 Input"'},'TiF4 Condenser Mass Inputs');
-            coPlot1{1,2} = oPlotter.definePlot({'"Gaseous Output"', '"Oxygen Output"', '"TiF4 Solid Output"'}, 'TiF4 Condenser Mass Outputs');
-            coPlot1{1,3} = oPlotter.definePlot({'"Total Output Pressure"', '"Output ppO2"', '"Output ppTiF4"'}, 'TiF4 Condenser Pressures Outputs');
+            coPlot1{1,1} = oPlotter.definePlot({'"Total Gaseous Input"', '"Oxygen Input"', '"SiF4 Input"'},'SiF4 Condenser Mass Inputs');
+            coPlot1{1,2} = oPlotter.definePlot({'"Gaseous Output"', '"Oxygen Output"', '"SiF4 Solid Output"'}, 'SiF4 Condenser Mass Outputs');
+            coPlot1{1,3} = oPlotter.definePlot({'"Total Output Pressure"', '"Output ppO2"', '"Output ppSiF4"'}, 'SiF4 Condenser Pressures Outputs');
 %             coPlot1{2,1} = oPlotter.definePlot({'"Regolith Gas Out"'}, 'Regolith Gas Out');
 %             coPlot1{2,2} = oPlotter.definePlot({'"Regolith Solid Out"'}, 'Regolith Solid Out');
 %             coPlot1{3,1} = oPlotter.definePlot({'"TiF4 Gas Out"'}, 'TiF4 Gas Out');

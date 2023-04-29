@@ -41,15 +41,15 @@ classdef Habitat < vsys
 
             % TiF4 Condenser Gas Output and SiF4 Condenser Input
             matter.store(this, 'TiF4_Gas_Output', 10);
-            matter.phases.gas(this.toStores.TiF4_Gas_Output, 'TiF4_Gas_Out', struct('O2', .245, 'F2', .238, 'SiF4', .488), 1, 293);
+            matter.phases.gas(this.toStores.TiF4_Gas_Output, 'TiF4_Gas_Out', struct('O2', 25.2, 'F2', 45.4, 'SiF4', 29.4), 1, 293);
 
             % SiF4 Condenser Solid Output and Plasma Reactor Input
             matter.store(this, 'SiF4_Solid_Output', 10);
-            matter.phases.solid(this.toStores.SiF4_Solid_Output, 'SiF4_Solid_Out', struct('SiF4', 0.1), 293);
+            matter.phases.solid(this.toStores.SiF4_Solid_Output, 'SiF4_Solid_Out', struct('SiF4', 0.294), 293);
 
             % SiF4 Condenser Gas Output and Fluorination Reactor Input
             matter.store(this, 'SiF4_Gas_Output', 10);
-            matter.phases.gas(this.toStores.SiF4_Gas_Output, 'SiF4_Gas_Out', struct('O2', 0.1, 'F2', 0.1), 1, 293);
+            matter.phases.gas(this.toStores.SiF4_Gas_Output, 'SiF4_Gas_Out', struct('O2', 0.252, 'F2', 0.454), 1, 293);
 
 %             % Fluorination Reactor Solid Output and Potassium Furnace Input
 %             matter.store(this, 'Fluorination_Solid_Output', 10);
