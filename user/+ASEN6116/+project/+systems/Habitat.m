@@ -153,7 +153,7 @@ classdef Habitat < vsys
             createSolverStructure@vsys(this);
 
             % Return fluorine from plasma reactor to F2 storage
-%             solver.matter.residual.branch(this.toBranches.Plasma_Reactor_to_F2_Storage);
+            solver.matter.residual.branch(this.toBranches.Plasma_Reactor_to_F2_Storage);
 %             solver.matter.residual.branch(this.toBranches.Electrolyzer_to_F2_Storage);
 
             this.setThermalSolvers();
