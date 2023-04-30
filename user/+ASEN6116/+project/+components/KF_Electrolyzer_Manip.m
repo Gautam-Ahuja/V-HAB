@@ -17,7 +17,7 @@ classdef KF_Electrolyzer_Manip < matter.manips.substance.stationary
 
             % Stoichiometric reaction for production
             fF2Production = 0.5*this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.KF)*afFlowRateIn(this.oMT.tiN2I.KF);
-            fKProduction = (1-(2*this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.KF))) * afFlowRateIn(this.oMT.tiN2I.KF);
+            fKProduction = this.oMT.afMolarMass(this.oMT.tiN2I.K)/this.oMT.afMolarMass(this.oMT.tiN2I.KF)*afFlowRateIn(this.oMT.tiN2I.KF);
 
             afPartialFlowRates = zeros(1, this.oPhase.oMT.iSubstances);
             afPartialFlowRates(this.oMT.tiN2I.KF) = -(fF2Production + fKProduction);

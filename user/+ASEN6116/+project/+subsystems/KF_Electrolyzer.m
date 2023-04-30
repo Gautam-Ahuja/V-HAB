@@ -17,16 +17,16 @@ classdef KF_Electrolyzer < vsys
             % Phases
             matter.phases.liquid(this.toStores.KF_Electrolyzer_Store, 'KF_Electrolyzer_Input', struct('KF', 1), 293, 1e5);
             matter.phases.gas(this.toStores.KF_Electrolyzer_Store, 'KF_Electrolyzer_Gas_Output', struct('F2', 0.1), 0.25, 293);
-            matter.phases.solid(this.toStores.KF_Electrolyzer_Store, 'KF_Electrolyzer_Solid_Output', struct('K', 1), 293);
+            matter.phases.solid(this.toStores.KF_Electrolyzer_Store, 'KF_Electrolyzer_Solid_Output', struct('K', 0.1), 293);
 
             % Manip
             ASEN6116.project.components.KF_Electrolyzer_Manip('KF_Electrolyzer_Manip', this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Input);
 
             % Gaseous P2P
-            ASEN6116.project.components.General_P2P(this.toStores.KF_Electrolyzer_Store, 'F2_P2P', this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Input, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Gas_Output, 'F2');
+            ASEN6116.project.components.KF_Electrolyzer_P2P(this.toStores.KF_Electrolyzer_Store, 'F2_P2P', this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Input, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Gas_Output, 'F2');
 
             % Solid P2P
-            ASEN6116.project.components.General_P2P(this.toStores.KF_Electrolyzer_Store, 'K_P2P', this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Input, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Solid_Output, 'K');
+            ASEN6116.project.components.KF_Electrolyzer_P2P(this.toStores.KF_Electrolyzer_Store, 'K_P2P', this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Input, this.toStores.KF_Electrolyzer_Store.toPhases.KF_Electrolyzer_Solid_Output, 'K');
 
             % Pipes
             fLength     = 1;    % Pipe length in m
@@ -45,9 +45,10 @@ classdef KF_Electrolyzer < vsys
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
 
-            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_Regolith_Reactor);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_K_Furnace);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Inlet_to_KF_Electrolyzer);
+            solver.matter.interval.branch(this.toBranches.Gas_to_Regolith_Reactor);
+            solver.matter.residual.branch(this.toBranches.Solid_to_K_Furnace);
+            solver.matter.manual.branch(this.toBranches.Inlet_to_KF_Electrolyzer);
+            this.toBranches.Inlet_to_KF_Electrolyzer.oHandler.setFlowRate(-2.4e-3);
 
             this.setThermalSolvers();
         end

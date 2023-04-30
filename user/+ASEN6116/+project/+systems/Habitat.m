@@ -32,8 +32,8 @@ classdef Habitat < vsys
 %             matter.phases.mixture(this.toStores.Regolith_Supply, 'Feed_Regolith', 'solid', struct('Regolith', 100), this.oMT.Standard.Temperature, this.oMT.Standard.Pressure);
 % 
             % F2 supply
-            matter.store(this, 'F2_Storage', 10);
-            matter.phases.gas(this.toStores.F2_Storage, 'Feed_F2', struct('F2', 100), 0.5, 293);
+%             matter.store(this, 'F2_Storage', 10);
+%             matter.phases.gas(this.toStores.F2_Storage, 'Feed_F2', struct('F2', .1), 0.5, 293);
 % 
 %             % TiF4 Condenser Solid Output and Potassium Furnace Input
 %             matter.store(this, 'TiF4_Solid_Output', 10);
@@ -81,7 +81,7 @@ classdef Habitat < vsys
 % 
             % K Furnace Liquid Output to Electrolyzer
             matter.store(this, 'K_Furnace_Liquid_Output', 10);
-            matter.phases.liquid(this.toStores.K_Furnace_Liquid_Output, 'K_Furnace_Liquid_Out', struct('KF', 0.1), 293, 1e5);
+            matter.phases.liquid(this.toStores.K_Furnace_Liquid_Output, 'K_Furnace_Liquid_Out', struct('KF', 100), 293, 1e5);
 % 
 %             % External Stores-> Regolith Reactor
 %             matter.branch(this, 'Regolith_Reactor_Gas_Inlet',  {}, this.toStores.F2_Storage.toPhases.Feed_F2);
@@ -145,7 +145,7 @@ classdef Habitat < vsys
 % 
             % Branch plasma reactor and electrolyzer fluorine output back to fluorine storage
 %             matter.branch(this, this.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out, {}, this.toStores.F2_Storage.toPhases.Feed_F2, 'Plasma_Reactor_to_F2_Storage');
-            matter.branch(this, this.toStores.Electrolyzer_Gas_Output.toPhases.Electrolyzer_Gas_Out, {}, this.toStores.F2_Storage.toPhases.Feed_F2, 'Electrolyzer_to_F2_Storage');        
+%             matter.branch(this, this.toStores.Electrolyzer_Gas_Output.toPhases.Electrolyzer_Gas_Out, {}, this.toStores.F2_Storage.toPhases.Feed_F2, 'Electrolyzer_to_F2_Storage');        
         end
 
         function createSolverStructure(this)
@@ -153,7 +153,7 @@ classdef Habitat < vsys
 
             % Return fluorine from plasma reactor to F2 storage
 %             solver.matter.residual.branch(this.toBranches.Plasma_Reactor_to_F2_Storage);
-            solver.matter.residual.branch(this.toBranches.Electrolyzer_to_F2_Storage);
+%             solver.matter.residual.branch(this.toBranches.Electrolyzer_to_F2_Storage);
 
             this.setThermalSolvers();
         end
