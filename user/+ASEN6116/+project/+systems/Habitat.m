@@ -50,7 +50,7 @@ classdef Habitat < vsys
 
             % SiF4 Condenser Gas Output and Fluorination Reactor Input
             matter.store(this, 'SiF4_Gas_Output', 10);
-            matter.phases.gas(this.toStores.SiF4_Gas_Output, 'SiF4_Gas_Out', struct('O2', 0.1, 'F2', 0.1), 1, 293);
+            matter.phases.gas(this.toStores.SiF4_Gas_Output, 'SiF4_Gas_Out', struct('O2', 50.7, 'F2', 49.3), 1, 293);
 
             % Fluorination Reactor Solid Output and Potassium Furnace Input
             matter.store(this, 'Fluorination_Solid_Output', 10);
@@ -76,9 +76,9 @@ classdef Habitat < vsys
 %             matter.store(this, 'Electrolyzer_Gas_Output', 10);
 %             matter.phases.gas(this.toStores.Electrolyzer_Gas_Output, 'Electrolyzer_Gas_Out', struct('F2', 0.1), 1, 293);
 % 
-%             % K Furnace Solid Output to Metals Output
-%             matter.store(this, 'K_Furnace_Solid_Output', 10);
-%             matter.phases.solid(this.toStores.K_Furnace_Solid_Output, 'K_Furnace_Solid_Out', struct('Fe', 0.1, 'Al', 0.1, 'CaO', 0.1, 'MgO', 0.1, 'Na2O', 0.1, 'TiO2', 0.1), 293);
+            % K Furnace Solid Output to Metals Output
+            matter.store(this, 'K_Furnace_Solid_Output', 10);
+            matter.phases.solid(this.toStores.K_Furnace_Solid_Output, 'K_Furnace_Solid_Out', struct('Fe', 12.3, 'Al', 18.2, 'CaO', 13.2, 'MgO', 14.3, 'Na2O', 1.2, 'TiO2', 3.1), 293);
 % 
 %             % K Furnace Liquid Output to Electrolyzer
 %             matter.store(this, 'K_Furnace_Liquid_Output', 10);

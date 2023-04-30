@@ -15,7 +15,7 @@ classdef Fluorination_Reactor < vsys
             matter.store(this, 'Fluorination_Reactor_Store', 1);
 
             % Phases
-            matter.phases.mixture(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Input','solid', struct('O2', 0.1, 'F2', 0.1, 'Fe', 1, 'MgO', 1, 'CaO', 1, 'Al', 1, 'Na2O', 1, 'TiO2', 1), 293, 1e5);
+            matter.phases.mixture(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Input','solid', struct('O2', .507, 'F2', .493, 'Fe', 1, 'MgO', 1, 'CaO', 1, 'Al', 1, 'Na2O', 1, 'TiO2', 1), 293, 1e5);
             matter.phases.gas(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Gas_Output', struct('O2', 0.1) , 0.25, 293);
             matter.phases.solid(this.toStores.Fluorination_Reactor_Store, 'Fluorination_Reactor_Solid_Output', struct('FeF3', 1, 'MgF2', 1, 'CaF2', 1, 'AlF3', 1, 'NaF', 1), 293);
 
@@ -49,11 +49,12 @@ classdef Fluorination_Reactor < vsys
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_O2_Storage);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_K_Furnace);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_Inlet_to_Fluorination_Reactor);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_Inlet_to_Fluorination_Reactor);
-
+            solver.matter.interval.branch(this.toBranches.Gas_to_O2_Storage);
+            solver.matter.residual.branch(this.toBranches.Solid_to_K_Furnace);
+            solver.matter.manual.branch(this.toBranches.Gas_Inlet_to_Fluorination_Reactor);
+            this.toBranches.Gas_Inlet_to_Fluorination_Reactor.oHandler.setFlowRate(-0.83e-3);
+            solver.matter.manual.branch(this.toBranches.Solid_Inlet_to_Fluorination_Reactor);
+            this.toBranches.Solid_Inlet_to_Fluorination_Reactor.oHandler.setFlowRate(-0.5e-3);
             this.setThermalSolvers();
         end
     end

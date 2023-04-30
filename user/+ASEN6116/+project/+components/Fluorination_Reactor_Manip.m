@@ -12,13 +12,13 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
             if isempty(afFlowRate)
                 afFlowRateIn = zeros(1, this.oPhase.oMT.iSubstances);
             else
-                afFlowRateIn = sum(afFlowRate .* mrPartials(1,:),1);
+                afFlowRateIn = sum(afFlowRate .* mrPartials,1);
             end
 
             % Set output flows
             afPartialFlowRates = zeros(1, this.oPhase.oMT.iSubstances);
             fRemainingFluorine = afFlowRateIn(this.oMT.tiN2I.F2);
-            fO2Production = afFlowRateIn(this.oMT.tiN2I.O2);
+            fO2Production = 0;
 
             if fRemainingFluorine - (this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.Na2O)*afFlowRateIn(this.oMT.tiN2I.Na2O)) <= 0
                 % Incomplete reaction of Na2O fully consumes fluorine
@@ -26,11 +26,6 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 fO2Production = fO2Production + 0.5*this.oMT.afMolarMass(this.oMT.tiN2I.O2)/this.oMT.afMolarMass(this.oMT.tiN2I.F2)*fRemainingFluorine;
                 afPartialFlowRates(this.oMT.tiN2I.NaF) = fNaFProduction;
                 afPartialFlowRates(this.oMT.tiN2I.O2) = fO2Production;
-                afPartialFlowRates(this.oMT.tiN2I.CaO) = afFlowRateIn(this.oMT.tiN2I.CaO);
-                afPartialFlowRates(this.oMT.tiN2I.MgO) = afFlowRateIn(this.oMT.tiN2I.MgO);
-                afPartialFlowRates(this.oMT.tiN2I.Al) = afFlowRateIn(this.oMT.tiN2I.Al);
-                afPartialFlowRates(this.oMT.tiN2I.Ti) = afFlowRateIn(this.oMT.tiN2I.Ti);
-                afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
                 afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.Na2O) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
@@ -43,7 +38,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 fNa2OProduction = -afFlowRateIn(this.oMT.tiN2I.Na2O);
                 afPartialFlowRates(this.oMT.tiN2I.NaF) = fNaFProduction;
                 afPartialFlowRates(this.oMT.tiN2I.Na2O) = fNa2OProduction;
-                fRemainingFluorine = fRemainingFluorine - this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.Na2O).afFlowRateIn(this.oMT.tiN2I.Na2O);
+                fRemainingFluorine = fRemainingFluorine - this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.Na2O)*afFlowRateIn(this.oMT.tiN2I.Na2O);
             end
 
             if fRemainingFluorine - (this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.CaO)*afFlowRateIn(this.oMT.tiN2I.CaO)) <= 0
@@ -52,10 +47,6 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 fO2Production = fO2Production + 0.5*this.oMT.afMolarMass(this.oMT.tiN2I.O2)/this.oMT.afMolarMass(this.oMT.tiN2I.F2)*fRemainingFluorine;
                 afPartialFlowRates(this.oMT.tiN2I.CaF2) = fCaF2Production;
                 afPartialFlowRates(this.oMT.tiN2I.O2) = fO2Production;
-                afPartialFlowRates(this.oMT.tiN2I.MgO) = afFlowRateIn(this.oMT.tiN2I.MgO);
-                afPartialFlowRates(this.oMT.tiN2I.Al) = afFlowRateIn(this.oMT.tiN2I.Al);
-                afPartialFlowRates(this.oMT.tiN2I.Ti) = afFlowRateIn(this.oMT.tiN2I.Ti);
-                afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
                 afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.CaO) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
@@ -68,7 +59,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 fCaOProduction = -afFlowRateIn(this.oMT.tiN2I.CaO);
                 afPartialFlowRates(this.oMT.tiN2I.CaF2) = fCaF2Production;
                 afPartialFlowRates(this.oMT.tiN2I.CaO) = fCaOProduction;
-                fRemainingFluorine = fRemainingFluorine - this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.CaO).afFlowRateIn(this.oMT.tiN2I.CaO);
+                fRemainingFluorine = fRemainingFluorine - this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.CaO)*afFlowRateIn(this.oMT.tiN2I.CaO);
             end
 
             if fRemainingFluorine - (this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.MgO)*afFlowRateIn(this.oMT.tiN2I.MgO)) <= 0
@@ -77,9 +68,6 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 fO2Production = fO2Production + 0.5*this.oMT.afMolarMass(this.oMT.tiN2I.O2)/this.oMT.afMolarMass(this.oMT.tiN2I.F2)*fRemainingFluorine;
                 afPartialFlowRates(this.oMT.tiN2I.MgF2) = fMgF2Production;
                 afPartialFlowRates(this.oMT.tiN2I.O2) = fO2Production;
-                afPartialFlowRates(this.oMT.tiN2I.Al) = afFlowRateIn(this.oMT.tiN2I.Al);
-                afPartialFlowRates(this.oMT.tiN2I.Ti) = afFlowRateIn(this.oMT.tiN2I.Ti);
-                afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
                 afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.MgO) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
@@ -92,16 +80,14 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 fMgOProduction = -afFlowRateIn(this.oMT.tiN2I.MgO);
                 afPartialFlowRates(this.oMT.tiN2I.MgF2) = fMgF2Production;
                 afPartialFlowRates(this.oMT.tiN2I.MgO) = fMgOProduction;
-                fRemainingFluorine = fRemainingFluorine - this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.MgO).afFlowRateIn(this.oMT.tiN2I.MgO);
+                fRemainingFluorine = fRemainingFluorine - this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.MgO)*afFlowRateIn(this.oMT.tiN2I.MgO);
             end
 
-            if fRemainingFluorine - (this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.Al)*afFlowRateIn(this.oMT.tiN2I.Al)) <= 0
+            if fRemainingFluorine - 1.5*(this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.Al)*afFlowRateIn(this.oMT.tiN2I.Al)) <= 0
                 % Incomplete reaction of Al fully consumes fluorine
                 fAlF3Production = 2/3*this.oMT.afMolarMass(this.oMT.tiN2I.AlF3)/this.oMT.afMolarMass(this.oMT.tiN2I.F2)*fRemainingFluorine;
                 afPartialFlowRates(this.oMT.tiN2I.AlF3) = fAlF3Production;
                 afPartialFlowRates(this.oMT.tiN2I.O2) = fO2Production;
-                afPartialFlowRates(this.oMT.tiN2I.Ti) = afFlowRateIn(this.oMT.tiN2I.Ti);
-                afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
                 afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.Al) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
@@ -113,7 +99,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 fAlProduction = -afFlowRateIn(this.oMT.tiN2I.Al);
                 afPartialFlowRates(this.oMT.tiN2I.AlF3) = fAlF3Production;
                 afPartialFlowRates(this.oMT.tiN2I.Al) = fAlProduction;
-                fRemainingFluorine = fRemainingFluorine - 1.5*this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.Al).afFlowRateIn(this.oMT.tiN2I.Al);
+                fRemainingFluorine = fRemainingFluorine - 1.5*this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.Al)*afFlowRateIn(this.oMT.tiN2I.Al);
             end
 
             if fRemainingFluorine - (this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.TiO2)*afFlowRateIn(this.oMT.tiN2I.TiO2)) <= 0
@@ -122,7 +108,6 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 fO2Production = fO2Production + this.oMT.afMolarMass(this.oMT.tiN2I.O2)/this.oMT.afMolarMass(this.oMT.tiN2I.F2)*fRemainingFluorine;
                 afPartialFlowRates(this.oMT.tiN2I.TiF4) = fTiF4Production;
                 afPartialFlowRates(this.oMT.tiN2I.O2) = fO2Production;
-                afPartialFlowRates(this.oMT.tiN2I.Fe) = afFlowRateIn(this.oMT.tiN2I.Fe);
                 afPartialFlowRates(this.oMT.tiN2I.F2) = -afFlowRateIn(this.oMT.tiN2I.F2);
                 afPartialFlowRates(this.oMT.tiN2I.Ti) = -sum(afPartialFlowRates);
                 update@matter.manips.substance.stationary(this, afPartialFlowRates);
@@ -134,7 +119,7 @@ classdef Fluorination_Reactor_Manip < matter.manips.substance.stationary & event
                 fTiO2Production = -afFlowRateIn(this.oMT.tiN2I.TiO2);
                 afPartialFlowRates(this.oMT.tiN2I.TiF4) = fTiF4Production;
                 afPartialFlowRates(this.oMT.tiN2I.TiO2) = fTiO2Production;
-                fRemainingFluorine = fRemainingFluorine - 0.5*this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.TiO2).afFlowRateIn(this.oMT.tiN2I.TiO2);
+                fRemainingFluorine = fRemainingFluorine - 0.5*this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.TiO2)*afFlowRateIn(this.oMT.tiN2I.TiO2);
             end
 
             if fRemainingFluorine - (this.oMT.afMolarMass(this.oMT.tiN2I.F2)/this.oMT.afMolarMass(this.oMT.tiN2I.Fe)*afFlowRateIn(this.oMT.tiN2I.Fe)) <= 0
