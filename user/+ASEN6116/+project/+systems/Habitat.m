@@ -145,7 +145,7 @@ classdef Habitat < vsys
             this.toChildren.Plasma_Reactor.setIfFlows('Plasma_Reactor_Inlet', 'Plasma_Reactor_Gas_Outlet', 'Plasma_Reactor_Solid_Outlet');
 
             % Branch plasma reactor and electrolyzer fluorine output back to fluorine storage
-            matter.branch(this, this.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out, {}, this.toStores.F2_Storage.toPhases.Feed_F2, 'Plasma_Reactor_to_F2_Storage');
+%             matter.branch(this, this.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out, {}, this.toStores.F2_Storage.toPhases.Feed_F2, 'Plasma_Reactor_to_F2_Storage');
 %             matter.branch(this, this.toStores.Electrolyzer_Gas_Output.toPhases.Electrolyzer_Gas_Out, {}, this.toStores.F2_Storage.toPhases.Feed_F2, 'Electrolyzer_to_F2_Storage');        
         end
 
@@ -153,7 +153,7 @@ classdef Habitat < vsys
             createSolverStructure@vsys(this);
 
             % Return fluorine from plasma reactor to F2 storage
-            solver.matter.residual.branch(this.toBranches.Plasma_Reactor_to_F2_Storage);
+%             solver.matter.residual.branch(this.toBranches.Plasma_Reactor_to_F2_Storage);
 %             solver.matter.residual.branch(this.toBranches.Electrolyzer_to_F2_Storage);
 
             this.setThermalSolvers();

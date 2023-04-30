@@ -33,7 +33,7 @@ classdef setup < simulation.infrastructure
 
             oLogger.addValue('Habitat.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out', 'fMass', 'kg', 'Total Solid Input (SiF4)');
 %             oLogger.addValue('Habitat.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out', 'fMass', 'kg', 'Total Gaseous Output (F2)');
-            oLogger.addValue('Habitat.toStores.F2_Storage.toPhases.Feed_F2', 'fMass', 'kg', 'Total Gaseous Output (F2)');
+            oLogger.addValue('Habitat.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out', 'fMass', 'kg', 'Total Gaseous Output (F2)');
             oLogger.addValue('Habitat.toStores.Plasma_Solid_Output.toPhases.Plasma_Solid_Out', 'fMass', 'kg', 'Total Solid Output (Si)');
             oLogger.addValue('Habitat.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out', 'fPressure', 'Pa', 'Total Output Pressure');
             
@@ -60,7 +60,7 @@ classdef setup < simulation.infrastructure
 
             coPlot1{1,1} = oPlotter.definePlot({'"Total Solid Input (SiF4)"'},'Plasma Reactor Mass Inputs');
             coPlot1{1,2} = oPlotter.definePlot({'"Total Gaseous Output (F2)"', '"Total Solid Output (Si)"'}, 'Plasma Reactor Mass Outputs');
-            coPlot1{1,3} = oPlotter.definePlot({'"Total Output Pressure"'}, 'Plasma Reactor Pressures Outputs');
+            coPlot1{1,3} = oPlotter.definePlot({'"Total Output Pressure"'}, 'Plasma Reactor Pressure Outputs');
 %             coPlot1{2,1} = oPlotter.definePlot({'"Regolith Gas Out"'}, 'Regolith Gas Out');
 %             coPlot1{2,2} = oPlotter.definePlot({'"Regolith Solid Out"'}, 'Regolith Solid Out');
 %             coPlot1{3,1} = oPlotter.definePlot({'"TiF4 Gas Out"'}, 'TiF4 Gas Out');
