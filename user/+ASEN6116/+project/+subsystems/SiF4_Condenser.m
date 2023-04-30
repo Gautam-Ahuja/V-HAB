@@ -15,9 +15,9 @@ classdef SiF4_Condenser < vsys
             matter.store(this, 'SiF4_Condenser_Store', 1);
 
             % Phases
-            matter.phases.gas(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Input', struct('O2', 0.1, 'F2', 0.1, 'SiF4', 0.1), 0.25, 293);
-            matter.phases.gas(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Gas_Output', struct('O2', 0.1, 'F2', 0.1), 0.25, 293);
-            matter.phases.solid(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Solid_Output', struct('SiF4', 0.1), 293);
+            matter.phases.gas(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Input', struct('O2', 0.252, 'F2', 0.245, 'SiF4', 0.503), 0.25, 293);
+            matter.phases.gas(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Gas_Output', struct('O2', 0.252, 'F2', 0.245), 0.25, 293);
+            matter.phases.solid(this.toStores.SiF4_Condenser_Store, 'SiF4_Condenser_Solid_Output', struct('SiF4', 0.503), 293);
 
             % Gaseous P2Ps
             ASEN6116.project.components.General_P2P(this.toStores.SiF4_Condenser_Store, 'O2_P2P', this.toStores.SiF4_Condenser_Store.toPhases.SiF4_Condenser_Input, this.toStores.SiF4_Condenser_Store.toPhases.SiF4_Condenser_Gas_Output, 'O2');
@@ -41,9 +41,13 @@ classdef SiF4_Condenser < vsys
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_Fluorination_Reactor);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_Plasma_Reactor);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Inlet_to_SiF4_Condenser);
+%             solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_Fluorination_Reactor);
+%             solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_Plasma_Reactor);
+%             solver.matter_multibranch.iterative.branch(this.toBranches.Inlet_to_SiF4_Condenser);
+            solver.matter.interval.branch(this.toBranches.Gas_to_Fluorination_Reactor);
+            solver.matter.residual.branch(this.toBranches.Solid_to_Plasma_Reactor);
+            solver.matter.manual.branch(this.toBranches.Inlet_to_SiF4_Condenser);
+            this.toBranches.Inlet_to_SiF4_Condenser.oHandler.setFlowRate(-1.65e-3);
 
             this.setThermalSolvers();
         end

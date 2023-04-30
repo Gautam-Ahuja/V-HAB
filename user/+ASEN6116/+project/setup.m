@@ -23,13 +23,16 @@ classdef setup < simulation.infrastructure
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
-            this.fSimTime = 60; % 1800; % 1 day in seconds
+            this.fSimTime = 1800; % 30 minutes in seconds
             this.bUseTime = true;
         end
 
         function configureMonitors(this)
             %% Logging
             oLogger = this.toMonitors.oLogger;
+            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fMass', 'kg', 'Total Gaseous Input');
+            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afMass(this.oMT.tiN2I.O2)', 'kg', 'Oxygen Input');
+            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afMass(this.oMT.tiN2I.SiF4)', 'kg', 'SiF4 Input');
             oLogger.addValue('Habitat.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out', 'fMass', 'kg', 'SiF4 Solid Output');
             oLogger.addValue('Habitat.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out', 'this.afMass(this.oMT.tiN2I.O2)', 'kg', 'Oxygen Output');
             oLogger.addValue('Habitat.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out', 'fMass', 'kg', 'Gaseous Output');
