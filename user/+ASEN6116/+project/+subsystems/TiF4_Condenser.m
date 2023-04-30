@@ -15,9 +15,9 @@ classdef TiF4_Condenser < vsys
             matter.store(this, 'TiF4_Condenser_Store', 1);
 
             % Phases
-            matter.phases.gas(this.toStores.TiF4_Condenser_Store, 'TiF4_Condenser_Input', struct('O2', 0.1, 'F2', 0.1, 'SiF4', 0.1, 'TiF4', 0.1), 0.25, 293);
-            matter.phases.gas(this.toStores.TiF4_Condenser_Store, 'TiF4_Condenser_Gas_Output', struct('O2', 0.1, 'F2', 0.1, 'SiF4', 0.1), 0.25, 293);
-            matter.phases.solid(this.toStores.TiF4_Condenser_Store, 'TiF4_Condenser_Solid_Output', struct('TiF4', 1), 293);
+            matter.phases.gas(this.toStores.TiF4_Condenser_Store, 'TiF4_Condenser_Input', struct('O2', 0.245, 'F2', 0.238, 'SiF4', 0.488, 'TiF4', 0.029), 0.25, 293);
+            matter.phases.gas(this.toStores.TiF4_Condenser_Store, 'TiF4_Condenser_Gas_Output', struct('O2', 0.245, 'F2', 0.238, 'SiF4', 0.488), 0.25, 293);
+            matter.phases.solid(this.toStores.TiF4_Condenser_Store, 'TiF4_Condenser_Solid_Output', struct('TiF4', .029), 293);
 
             % Gaseous P2Ps
             ASEN6116.project.components.General_P2P(this.toStores.TiF4_Condenser_Store, 'O2_P2P', this.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Input, this.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Gas_Output, 'O2');
@@ -42,9 +42,10 @@ classdef TiF4_Condenser < vsys
 
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_SiF4_Condenser);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_K_Furnace);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Inlet_to_TiF4_Condenser);
+            solver.matter.interval.branch(this.toBranches.Gas_to_SiF4_Condenser);
+            solver.matter.residual.branch(this.toBranches.Solid_to_K_Furnace);
+            solver.matter.manual.branch(this.toBranches.Inlet_to_TiF4_Condenser);
+            this.toBranches.Inlet_to_TiF4_Condenser.oHandler.setFlowRate(-1.7e-3);
 
             this.setThermalSolvers();
         end
