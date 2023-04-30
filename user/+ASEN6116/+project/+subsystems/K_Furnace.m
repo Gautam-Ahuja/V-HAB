@@ -57,14 +57,18 @@ classdef K_Furnace < vsys
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
 
-            solver.matter_multibranch.iterative.branch(this.toBranches.Regolith_Reactor_to_K_Furnace);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Fluorination_Reactor_to_K_Furnace);
-            solver.matter_multibranch.iterative.branch(this.toBranches.TiF4_Condenser_to_K_Furnace);
-            solver.matter_multibranch.iterative.branch(this.toBranches.KF_Electrolyzer_to_K_Furnace);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Liquid_to_KF_Electrolyzer);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_Metal_Output)
+            solver.matter.manual.branch(this.toBranches.Regolith_Reactor_to_K_Furnace);
+            this.toBranches.Regolith_Reactor_to_K_Furnace.oHandler.setFlowRate(-0.8e-3);
+            solver.matter.manual.branch(this.toBranches.Fluorination_Reactor_to_K_Furnace);
+            this.toBranches.Fluorination_Reactor_to_K_Furnace.oHandler.setFlowRate(-0.49e-3);
+            solver.matter.manual.branch(this.toBranches.TiF4_Condenser_to_K_Furnace);
+            this.toBranches.TiF4_Condenser_to_K_Furnace.oHandler.setFlowRate(-0.05e-3);
+            solver.matter.manual.branch(this.toBranches.KF_Electrolyzer_to_K_Furnace);
+            this.toBranches.KF_Electrolyzer_to_K_Furnace.oHandler.setFlowRate(-1.6e-3);
+            solver.matter.residual.branch(this.toBranches.Liquid_to_KF_Electrolyzer);
+            solver.matter.residual.branch(this.toBranches.Solid_to_Metal_Output)
             solver.matter.manual.branch(this.toBranches.O2_to_K_Furnace);
-            this.toBranches.O2_to_K_Furnace.oHandler.setFlowRate(-0.001);
+            this.toBranches.O2_to_K_Furnace.oHandler.setFlowRate(-0.17e-3);
 
             this.setThermalSolvers();
         end

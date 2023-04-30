@@ -12,30 +12,26 @@ classdef K_Furnace_Manip < matter.manips.substance.stationary
             if isempty(afFlowRate)
                 afFlowRateIn = zeros(1, this.oPhase.oMT.iSubstances);
             else
-                afFlowRateIn = sum(afFlowRate .* mrPartials(1,:),1);
+                afFlowRateIn = sum(afFlowRate .* mrPartials,1);
             end
 
             % Stoichiometric reaction for production
             fFeProduction = this.oMT.afMolarMass(this.oMT.tiN2I.Fe)/this.oMT.afMolarMass(this.oMT.tiN2I.FeF3)*afFlowRateIn(this.oMT.tiN2I.FeF3);
             fMgOProduction = this.oMT.afMolarMass(this.oMT.tiN2I.MgO)/this.oMT.afMolarMass(this.oMT.tiN2I.MgF2)*afFlowRateIn(this.oMT.tiN2I.MgF2);
             fCaOProduction = this.oMT.afMolarMass(this.oMT.tiN2I.CaO)/this.oMT.afMolarMass(this.oMT.tiN2I.CaF2)*afFlowRateIn(this.oMT.tiN2I.CaF2);
-            fAlProduction = 2*this.oMT.afMolarMass(this.oMT.tiN2I.Al)/this.oMT.afMolarMass(this.oMT.tiN2I.AlF3)*afFlowRateIn(this.oMT.tiN2I.AlF3);
-            fNa2OProduction = 2*this.oMT.afMolarMass(this.oMT.tiN2I.Na2O)/this.oMT.afMolarMass(this.oMT.tiN2I.NaF)*afFlowRateIn(this.oMT.tiN2I.NaF);
+            fAlProduction = this.oMT.afMolarMass(this.oMT.tiN2I.Al)/this.oMT.afMolarMass(this.oMT.tiN2I.AlF3)*afFlowRateIn(this.oMT.tiN2I.AlF3);
+            fNa2OProduction = 0.5*this.oMT.afMolarMass(this.oMT.tiN2I.Na2O)/this.oMT.afMolarMass(this.oMT.tiN2I.NaF)*afFlowRateIn(this.oMT.tiN2I.NaF);
             fTiO2Production = this.oMT.afMolarMass(this.oMT.tiN2I.TiO2)/this.oMT.afMolarMass(this.oMT.tiN2I.TiF4)*afFlowRateIn(this.oMT.tiN2I.TiF4);
 
 
             % Stoichiometric consumption of K and O2
-            
-            % F is used to calculate K consumption
-            fFConsumption = this.oMT.afMolarMass(this.oMT.tiN2I.F)*...
+            fKConsumption = this.oMT.afMolarMass(this.oMT.tiN2I.K)*...
                 (3*afFlowRateIn(this.oMT.tiN2I.FeF3)/this.oMT.afMolarMass(this.oMT.tiN2I.FeF3)+...
                 2*afFlowRateIn(this.oMT.tiN2I.MgF2)/this.oMT.afMolarMass(this.oMT.tiN2I.MgF2)+...
                 2*afFlowRateIn(this.oMT.tiN2I.CaF2)/this.oMT.afMolarMass(this.oMT.tiN2I.CaF2)+...
                 3*afFlowRateIn(this.oMT.tiN2I.AlF3)/this.oMT.afMolarMass(this.oMT.tiN2I.AlF3)+...
                 1*afFlowRateIn(this.oMT.tiN2I.NaF)/this.oMT.afMolarMass(this.oMT.tiN2I.NaF)+...
                 4*afFlowRateIn(this.oMT.tiN2I.TiF4)/this.oMT.afMolarMass(this.oMT.tiN2I.TiF4));
-
-            fKConsumption = this.oMT.afMolarMass(this.oMT.tiN2I.K)*(fFConsumption/this.oMT.afMolarMass(this.oMT.tiN2I.F));
 
             fO2Consumption = this.oMT.afMolarMass(this.oMT.tiN2I.O2)*...
                 (.5*fMgOProduction/this.oMT.afMolarMass(this.oMT.tiN2I.MgO)+...
@@ -59,7 +55,6 @@ classdef K_Furnace_Manip < matter.manips.substance.stationary
             afPartialFlowRates(this.oMT.tiN2I.NaF) = -afFlowRateIn(this.oMT.tiN2I.NaF);
             afPartialFlowRates(this.oMT.tiN2I.TiF4) = -afFlowRateIn(this.oMT.tiN2I.TiF4);
             afPartialFlowRates(this.oMT.tiN2I.K) = -fKConsumption;
-            afPartialFlowRates(this.oMT.tiN2I.F2) = -fFConsumption/2;
             afPartialFlowRates(this.oMT.tiN2I.O2) = -fO2Consumption;
 
             % Any unaccounted mass is KF

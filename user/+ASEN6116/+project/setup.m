@@ -30,15 +30,13 @@ classdef setup < simulation.infrastructure
         function configureMonitors(this)
             %% Logging
             oLogger = this.toMonitors.oLogger;
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'fMass', 'kg', 'Total Gaseous Input');
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'this.afMass(this.oMT.tiN2I.O2)', 'kg', 'Oxygen Input');
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'this.afMass(this.oMT.tiN2I.TiF4)', 'kg', 'TiF4 Input');
-            oLogger.addValue('Habitat.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out', 'fMass', 'kg', 'TiF4 Solid Output');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afMass(this.oMT.tiN2I.O2)', 'kg', 'Oxygen Output');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fMass', 'kg', 'Gaseous Output');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fPressure', 'Pa', 'Total Output Pressure');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afPP(this.oMT.tiN2I.O2)', 'Pa', 'Output ppO2');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afPP(this.oMT.tiN2I.TiF4)', 'Pa', 'Output ppTiF4');
+            oLogger.addValue('Habitat.toStores.Regolith_Solid_Output.toPhases.Reg_Solid_Out', 'fMass', 'kg', 'Regolith Reactor Solid Input');
+            oLogger.addValue('Habitat.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out', 'fMass', 'kg', 'TiF4 Condenser Solid Input');
+            oLogger.addValue('Habitat.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out', 'fMass', 'kg', 'Fluorination Reactor Solid Input');
+            oLogger.addValue('Habitat.toStores.Electrolyzer_Solid_Output.toPhases.Electrolyzer_Solid_Out', 'fMass', 'kg', 'Electrolyzer Solid Input');
+            oLogger.addValue('Habitat.toStores.K_Furnace_Solid_Output.toPhases.K_Furnace_Solid_Out', 'fMass', 'kg', 'Potassium Furnace Solid Output');
+            oLogger.addValue('Habitat.toStores.K_Furnace_Liquid_Output.toPhases.K_Furnace_Liquid_Out', 'fMass', 'kg', 'Potassium Furnace Liquid Output');
+            oLogger.addValue('Habitat.toStores.K_Furnace_Liquid_Output.toPhases.K_Furnace_Liquid_Out', 'fPressure', 'Pa', 'Total Liquid Output Pressure');
 
 %             oLogger.addValue('Habitat.toStores.Regolith_Supply.toPhases.Feed_Regolith', 'fMass', 'kg', 'Total Regolith In');
 %             oLogger.addValue('Habitat.toStores.F2_Storage.toPhases.Feed_F2', 'fMass', 'kg', 'F2 Gas In');
@@ -80,9 +78,9 @@ classdef setup < simulation.infrastructure
             % Defines the plotter object
             oPlotter = plot@simulation.infrastructure(this);
 
-            coPlot1{1,1} = oPlotter.definePlot({'"Total Gaseous Input"', '"Oxygen Input"', '"TiF4 Input"'},'TiF4 Condenser Mass Inputs');
-            coPlot1{1,2} = oPlotter.definePlot({'"Gaseous Output"', '"Oxygen Output"', '"TiF4 Solid Output"'}, 'TiF4 Condenser Mass Outputs');
-            coPlot1{1,3} = oPlotter.definePlot({'"Total Output Pressure"', '"Output ppO2"', '"Output ppTiF4"'}, 'TiF4 Condenser Pressures Outputs');
+            coPlot1{1,1} = oPlotter.definePlot({'"Regolith Reactor Solid Input"', '"TiF4 Condenser Solid Input"', '"Fluorination Reactor Solid Input"', '"Electrolyzer Solid Input"'},'Potassium Furnace Mass Inputs');
+            coPlot1{1,2} = oPlotter.definePlot({'"Potassium Furnace Solid Output"', '"Potassium Furnace Liquid Output"'}, 'Potassium Furnace Mass Outputs');
+            coPlot1{1,3} = oPlotter.definePlot({'"Total Liquid Output Pressure"'}, 'Potassium Furnace Pressure Outputs');
 %             coPlot1{2,1} = oPlotter.definePlot({'"Regolith Gas Out"'}, 'Regolith Gas Out');
 %             coPlot1{2,2} = oPlotter.definePlot({'"Regolith Solid Out"'}, 'Regolith Solid Out');
 %             coPlot1{3,1} = oPlotter.definePlot({'"TiF4 Gas Out"'}, 'TiF4 Gas Out');
