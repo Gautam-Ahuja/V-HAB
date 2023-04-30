@@ -23,42 +23,20 @@ classdef setup < simulation.infrastructure
             ASEN6116.project.systems.Habitat(this.oSimulationContainer,'Habitat');
 
             %% Simulation length
-            this.fSimTime = 1800; % 1 day in seconds
+            this.fSimTime = 1800; % 30 mins in seconds
             this.bUseTime = true;
         end
 
         function configureMonitors(this)
             %% Logging
             oLogger = this.toMonitors.oLogger;
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'fMass', 'kg', 'Total Gaseous Input');
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'this.afMass(this.oMT.tiN2I.O2)', 'kg', 'Oxygen Input');
-            oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'this.afMass(this.oMT.tiN2I.TiF4)', 'kg', 'TiF4 Input');
-            oLogger.addValue('Habitat.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out', 'fMass', 'kg', 'TiF4 Solid Output');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afMass(this.oMT.tiN2I.O2)', 'kg', 'Oxygen Output');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fMass', 'kg', 'Gaseous Output');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fPressure', 'Pa', 'Total Output Pressure');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afPP(this.oMT.tiN2I.O2)', 'Pa', 'Output ppO2');
-            oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'this.afPP(this.oMT.tiN2I.TiF4)', 'Pa', 'Output ppTiF4');
 
-%             oLogger.addValue('Habitat.toStores.Regolith_Supply.toPhases.Feed_Regolith', 'fMass', 'kg', 'Total Regolith In');
-%             oLogger.addValue('Habitat.toStores.F2_Storage.toPhases.Feed_F2', 'fMass', 'kg', 'F2 Gas In');
-%             oLogger.addValue('Habitat.toStores.Regolith_Gas_Output.toPhases.Reg_Gas_Out', 'fMass', 'kg', 'Regolith Gas Out');
-%             oLogger.addValue('Habitat.toStores.Regolith_Solid_Output.toPhases.Reg_Solid_Out', 'fMass', 'kg', 'Regolith Solid Out');
-%             oLogger.addValue('Habitat.toStores.TiF4_Gas_Output.toPhases.TiF4_Gas_Out', 'fMass', 'kg', 'TiF4 Gas Out');
-%             oLogger.addValue('Habitat.toStores.TiF4_Solid_Output.toPhases.TiF4_Solid_Out', 'fMass', 'kg', 'TiF4 Solid Out');
-%             oLogger.addValue('Habitat.toStores.SiF4_Gas_Output.toPhases.SiF4_Gas_Out', 'fMass', 'kg', 'SiF4 Gas Out');
-%             oLogger.addValue('Habitat.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out', 'fMass', 'kg', 'SiF4 Solid Out');
-%             oLogger.addValue('Habitat.toStores.Fluorination_Gas_Output.toPhases.Fluorination_Gas_Out', 'fMass', 'kg', 'Fluorination Gas Out');
-%             oLogger.addValue('Habitat.toStores.Fluorination_Solid_Output.toPhases.Fluorination_Solid_Out', 'fMass', 'kg', 'Fluorination Solid Out');
-%             oLogger.addValue('Habitat.toStores.K_Furnace_Liquid_Output.toPhases.K_Furnace_Liquid_Out', 'fMass', 'kg', 'K Furnace Liquid Out');
-%             oLogger.addValue('Habitat.toStores.K_Furnace_Solid_Output.toPhases.K_Furnace_Solid_Out', 'fMass', 'kg', 'K Furnace Solid Out');
-%             oLogger.addValue('Habitat.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out', 'fMass', 'kg', 'Plasma Gas Out');
-%             oLogger.addValue('Habitat.toStores.Plasma_Solid_Output.toPhases.Plasma_Solid_Out', 'fMass', 'kg', 'Plasma Solid Out');
-%             oLogger.addValue('Habitat.toStores.Electrolyzer_Gas_Output.toPhases.Electrolyzer_Gas_Out', 'fMass', 'kg', 'Electrolyzer Gas Out');
-%             oLogger.addValue('Habitat.toStores.Electrolyzer_Solid_Output.toPhases.Electrolyzer_Solid_Out', 'fMass', 'kg', 'Electrolyzer Solid Out');
-% 
-%             oLogger.addValue('Habitat.toChildren.TiF4_Condenser.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Input', 'fMass', 'kg', 'TiF4 Input');
-%             oLogger.addValue('Habitat.toChildren.TiF4_Condenser.toStores.TiF4_Condenser_Store.toPhases.TiF4_Condenser_Solid_Output', 'fMass', 'kg', 'TiF4 Solid Output');
+            oLogger.addValue('Habitat.toStores.SiF4_Solid_Output.toPhases.SiF4_Solid_Out', 'fMass', 'kg', 'Total Solid Input (SiF4)');
+%             oLogger.addValue('Habitat.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out', 'fMass', 'kg', 'Total Gaseous Output (F2)');
+            oLogger.addValue('Habitat.toStores.F2_Storage.toPhases.Feed_F2', 'fMass', 'kg', 'Total Gaseous Output (F2)');
+            oLogger.addValue('Habitat.toStores.Plasma_Solid_Output.toPhases.Plasma_Solid_Out', 'fMass', 'kg', 'Total Solid Output (Si)');
+            oLogger.addValue('Habitat.toStores.Plasma_Gas_Output.toPhases.Plasma_Gas_Out', 'fPressure', 'Pa', 'Total Output Pressure');
+            
         end
 
         function plot(this)
@@ -80,9 +58,9 @@ classdef setup < simulation.infrastructure
             % Defines the plotter object
             oPlotter = plot@simulation.infrastructure(this);
 
-            coPlot1{1,1} = oPlotter.definePlot({'"Total Gaseous Input"', '"Oxygen Input"', '"TiF4 Input"'},'TiF4 Condenser Mass Inputs');
-            coPlot1{1,2} = oPlotter.definePlot({'"Gaseous Output"', '"Oxygen Output"', '"TiF4 Solid Output"'}, 'TiF4 Condenser Mass Outputs');
-            coPlot1{1,3} = oPlotter.definePlot({'"Total Output Pressure"', '"Output ppO2"', '"Output ppTiF4"'}, 'TiF4 Condenser Pressures Outputs');
+            coPlot1{1,1} = oPlotter.definePlot({'"Total Solid Input (SiF4)"'},'Plasma Reactor Mass Inputs');
+            coPlot1{1,2} = oPlotter.definePlot({'"Total Gaseous Output (F2)"', '"Total Solid Output (Si)"'}, 'Plasma Reactor Mass Outputs');
+            coPlot1{1,3} = oPlotter.definePlot({'"Total Output Pressure"'}, 'Plasma Reactor Pressures Outputs');
 %             coPlot1{2,1} = oPlotter.definePlot({'"Regolith Gas Out"'}, 'Regolith Gas Out');
 %             coPlot1{2,2} = oPlotter.definePlot({'"Regolith Solid Out"'}, 'Regolith Solid Out');
 %             coPlot1{3,1} = oPlotter.definePlot({'"TiF4 Gas Out"'}, 'TiF4 Gas Out');

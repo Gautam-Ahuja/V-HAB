@@ -44,9 +44,14 @@ classdef Plasma_Reactor < vsys
         function createSolverStructure(this)
             createSolverStructure@vsys(this);
 
-            solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_Regolith_Reactor);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_Metal_Output);
-            solver.matter_multibranch.iterative.branch(this.toBranches.Inlet_to_Plasma_Reactor);
+%             solver.matter_multibranch.iterative.branch(this.toBranches.Gas_to_Regolith_Reactor);
+%             solver.matter_multibranch.iterative.branch(this.toBranches.Solid_to_Metal_Output);
+%             solver.matter_multibranch.iterative.branch(this.toBranches.Inlet_to_Plasma_Reactor);
+            solver.matter.interval.branch(this.toBranches.Gas_to_Regolith_Reactor);
+            solver.matter.residual.branch(this.toBranches.Solid_to_Metal_Output);
+            solver.matter.manual.branch(this.toBranches.Inlet_to_Plasma_Reactor);
+            this.toBranches.Inlet_to_Plasma_Reactor.oHandler.setFlowRate(-0.83e-3);
+            
             this.setThermalSolvers();
         end
     end

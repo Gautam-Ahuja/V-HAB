@@ -8,10 +8,10 @@ classdef Habitat < vsys
             this@vsys(oParent, sName, 30);
             eval(this.oRoot.oCfgParams.configCode(this));
 
-             ASEN6116.project.subsystems.Fluorination_Reactor(this, 'Fluorination_Reactor');
+%              ASEN6116.project.subsystems.Fluorination_Reactor(this, 'Fluorination_Reactor');
 %             ASEN6116.project.subsystems.K_Furnace(this, 'K_Furnace');
 %             ASEN6116.project.subsystems.KF_Electrolyzer(this, 'KF_Electrolyzer');
-%             ASEN6116.project.subsystems.Plasma_Reactor(this, 'Plasma_Reactor');
+            ASEN6116.project.subsystems.Plasma_Reactor(this, 'Plasma_Reactor');
 %             ASEN6116.project.subsystems.Regolith_Reactor(this, 'Regolith_Reactor');
 %             ASEN6116.project.subsystems.SiF4_Condenser(this, 'SiF4_Condenser');
 %             ASEN6116.project.subsystems.TiF4_Condenser(this, 'TiF4_Condenser');
@@ -34,7 +34,7 @@ classdef Habitat < vsys
 % 
             % F2 supply
             matter.store(this, 'F2_Storage', 10);
-            matter.phases.gas(this.toStores.F2_Storage, 'Feed_F2', struct('F2', 100), 0.5, 293);
+            matter.phases.gas(this.toStores.F2_Storage, 'Feed_F2', struct('F2', 0.1), 0.5, 293);
 % 
 %             % TiF4 Condenser Solid Output and Potassium Furnace Input
 %             matter.store(this, 'TiF4_Solid_Output', 10);
@@ -44,9 +44,9 @@ classdef Habitat < vsys
 %             matter.store(this, 'TiF4_Gas_Output', 10);
 %             matter.phases.gas(this.toStores.TiF4_Gas_Output, 'TiF4_Gas_Out', struct('O2', .245, 'F2', .238, 'SiF4', .488), 1, 293);
 % 
-%             % SiF4 Condenser Solid Output and Plasma Reactor Input
-%             matter.store(this, 'SiF4_Solid_Output', 10);
-%             matter.phases.solid(this.toStores.SiF4_Solid_Output, 'SiF4_Solid_Out', struct('SiF4', 0.1), 293);
+            % SiF4 Condenser Solid Output and Plasma Reactor Input
+            matter.store(this, 'SiF4_Solid_Output', 10);
+            matter.phases.solid(this.toStores.SiF4_Solid_Output, 'SiF4_Solid_Out', struct('SiF4', 100), 293);
 % 
 %             % SiF4 Condenser Gas Output and Fluorination Reactor Input
 %             matter.store(this, 'SiF4_Gas_Output', 10);
